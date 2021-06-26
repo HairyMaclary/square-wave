@@ -28,31 +28,23 @@ Grid::Grid(float windowWidth, float windowHeight, int resolution, sf::RenderWind
 	// }
 
 	grid.resize(cols);
-
 	for (int i { 0 }; i < cols; i++)
 	{
-		std::vector<sf::RectangleShape> column;
+		std::vector<state> column;
 		column.resize(rows);
 		for (int j { 0 }; j < rows; j++)
 		{
-			// Move non-const (position/fill) to draw call
-			// Move const (size, outline) out of loop
-			sf::RectangleShape square(sf::Vector2f(squareLength, squareLength));
-			square.setPosition(i * squareLength, j * squareLength);
-			int fill;
+			int state;
 			int randomNum = getRandom();
 			if (randomNum == 1)
 			{
-				fill = 255;
+				state = false;
 			}
 			else
 			{
-				fill = 0;
+				state = true;
 			}
-			square.setOutlineThickness(-1);
-			square.setFillColor(sf::Color(fill, fill, fill));
-			square.setOutlineColor(sf::Color(150, 150, 150));
-			column[j] = square;
+			column[j] = state;
 		}
 		grid[i] = column;
 	}
@@ -77,18 +69,27 @@ void Grid::draw()
 	{
 		for (int j { 0 }; j < rows; j++)
 		{
-			const sf::Color& next = nextState(i, j);
-			nextGrid[i][j].setFillColor(next);
+			nextGrid[i][j] = nextState(i, j);
 		}
 	}
 
 	grid = nextGrid;
 
+	// Imrpove performance by moving constant properties out of the loop
+	sf::RectangleShape square(sf::Vector2f(squareLength, squareLength));
+	square.setOutlineThickness(-1);
+	square.setOutlineColor(sf::Color(150, 150, 150));
+
 	for (uint i { 0 }; i < grid.size(); i++)
 	{
 		for (uint j { 0 }; j < grid[i].size(); j++)
 		{
-			mWindow.draw(grid[i][j]);
+			square.setPosition(i * squareLength, j * squareLength);
+
+			int fillColor = grid[i][j] ? 0 : 255;
+			square.setFillColor(sf::Color(fillColor, fillColor, fillColor));
+
+			mWindow.draw(square);
 		}
 	}
 }
@@ -100,15 +101,7 @@ int Grid::getRandom()
 
 bool Grid::isAlive(int i, int j)
 {
-	const sf::Color& color = grid[i][j].getFillColor();
-	if (color.r == 0)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return grid[i][j];
 }
 
 int Grid::getAliveNeighbors(int x, int y)
@@ -128,24 +121,22 @@ int Grid::getAliveNeighbors(int x, int y)
 	return sum;
 }
 
-const sf::Color Grid::nextState(int i, int j)
+state Grid::nextState(int i, int j)
 {
 	bool alive { isAlive(i, j) };
 
-	// TODO ditch curly braces and signed ints
-	// only expect curly braces when initializing an array
-	int neighbours { getAliveNeighbors(i, j) };
+	int neighbours = getAliveNeighbors(i, j);
 
 	if (alive && (neighbours == 2 || neighbours == 3))
 	{
-		return sf::Color(0, 0, 0);
+		return true;
 	}
 	else if (!alive && neighbours == 3)
 	{
-		return sf::Color(0, 0, 0);
+		return true;
 	}
 	else
 	{
-		return sf::Color(255, 255, 255);
+		return false;
 	}
 }
