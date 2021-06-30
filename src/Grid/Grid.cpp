@@ -18,21 +18,20 @@ Grid::Grid(float windowWidth, float windowHeight, int resolution, sf::RenderWind
 		this->squareLength = windowHeight / resolution;
 	}
 
-	this->cols = (int)(windowWidth / squareLength);
-	this->rows = (int)(windowHeight / squareLength);
+	this->cols = (uint)(windowWidth / squareLength);
+	this->rows = (uint)(windowHeight / squareLength);
 
-	// this->newGrid = new bool*[cols];
-	// for (int c = 0; c < cols; c++)
-	// {
-	// 	newGrid[c] = new bool[rows];
-	// }
-
-	grid.resize(cols);
-	for (int i { 0 }; i < cols; i++)
+	this->grid = new bool*[cols];
+	this->nextGrid = new bool*[cols];
+	for (uint c = 0; c < cols; c++)
 	{
-		std::vector<state> column;
-		column.resize(rows);
-		for (int j { 0 }; j < rows; j++)
+		grid[c] = new bool[rows];
+		nextGrid[c] = new bool[rows];
+	}
+
+	for (uint i { 0 }; i < cols; i++)
+	{
+		for (uint j { 0 }; j < rows; j++)
 		{
 			int state;
 			int randomNum = getRandom();
@@ -44,45 +43,51 @@ Grid::Grid(float windowWidth, float windowHeight, int resolution, sf::RenderWind
 			{
 				state = true;
 			}
-			column[j] = state;
+			grid[i][j] = state;
+			nextGrid[i][j] = state;
 		}
-		grid[i] = column;
 	}
-	nextGrid = grid;
 }
 
-// once you've used the new keyword you'll be wanting a deconstructor.
+// once you've used the 'new' keyword you'll be wanting a deconstructor.
 Grid::~Grid()
 {
 	// delete in reverse order to creation.
-
-	// for (int c = 0; c < cols; c++)
-	// {
-	// 	delete[] newGrid[c];
-	// }
-	// delete[] newGrid;
+	for (uint c = 0; c < cols; c++)
+	{
+		delete[] grid[c];
+		delete[] nextGrid[c];
+	}
+	delete[] grid;
+	delete[] nextGrid;
 }
 
 void Grid::draw()
 {
-	for (int i { 0 }; i < cols; i++)
+	for (uint i { 0 }; i < cols; i++)
 	{
-		for (int j { 0 }; j < rows; j++)
+		for (uint j { 0 }; j < rows; j++)
 		{
 			nextGrid[i][j] = nextState(i, j);
 		}
 	}
 
-	grid = nextGrid;
+	for (uint x = 0; x < cols; x++)
+	{
+		for (uint y = 0; y < rows; y++)
+		{
+			grid[x][y] = nextGrid[x][y];
+		}
+	}
 
-	// Imrpove performance by moving constant properties out of the loop
+	// Improve performance by moving fixed properties out of the loop
 	sf::RectangleShape square(sf::Vector2f(squareLength, squareLength));
 	square.setOutlineThickness(-1);
 	square.setOutlineColor(sf::Color(150, 150, 150));
 
-	for (uint i { 0 }; i < grid.size(); i++)
+	for (uint i { 0 }; i < cols; i++)
 	{
-		for (uint j { 0 }; j < grid[i].size(); j++)
+		for (uint j { 0 }; j < rows; j++)
 		{
 			square.setPosition(i * squareLength, j * squareLength);
 
@@ -111,8 +116,8 @@ int Grid::getAliveNeighbors(int x, int y)
 	{
 		for (int j { -1 }; j < 2; j++)
 		{
-			int col { (x + i + cols) % cols };
-			int row { (y + j + rows) % rows };
+			uint col { (x + i + cols) % cols };
+			uint row { (y + j + rows) % rows };
 			sum += isAlive(col, row);
 		}
 	}

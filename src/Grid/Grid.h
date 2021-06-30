@@ -5,15 +5,16 @@ using state = bool;
 
 class Grid
 {
-	int cols;
-	int rows;
+	uint cols;
+	uint rows;
 	float squareLength;
 	sf::RenderWindow& mWindow;
 
 private:
-	bool** newGrid;
-	std::vector<std::vector<state>> grid;
-	std::vector<std::vector<state>> nextGrid;
+	bool** grid;
+	bool** nextGrid;
+	// std::vector<std::vector<state>> grid;
+	// std::vector<std::vector<state>> nextGrid;
 	int getRandom();
 	int getAliveNeighbors(int x, int y);
 	bool isAlive(int i, int j);
