@@ -1,19 +1,9 @@
-#include "..\src\Grid\Grid.h"
-#include ".\Utility\Animation.h"
-#include ".\Utility\MapData.h"
 #include "Platform/Platform.hpp"
-
-#include <cmath>
-#include <cstdlib>
 #include <iostream>
 
 main()
 {
 	util::Platform platform;
-
-#if defined(_DEBUG)
-	std::cout << "Hello World!" << std::endl;
-#endif
 
 	sf::RenderWindow window;
 	// in Windows at least, this must be called before creating the window
@@ -21,30 +11,16 @@ main()
 	// Use the screenScalingFactor
 	float windowWidth { 1200.0f };
 	float windowHeight { 900.0f };
-	window.create(sf::VideoMode(windowWidth * screenScalingFactor, windowHeight * screenScalingFactor), "Conway");
+	window.create(sf::VideoMode(windowWidth * screenScalingFactor, windowHeight * screenScalingFactor), "Asteroids");
 	platform.setIcon(window.getSystemHandle());
 
-	const int maxSqaures1D { 100 };
-	Grid grid { windowWidth, windowHeight, maxSqaures1D, window };
-	grid.draw();
+	sf::CircleShape ship(80, 3);
+	ship.setFillColor(sf::Color(0, 0, 0));
+	ship.setOutlineThickness(2);
+	ship.setOutlineColor(sf::Color(250, 255, 255));
+	ship.setPosition(206.0f, 206.0f);
 
-	// sf::RectangleShape player(sf::Vector2f(100.0f, 150.0f));
-	// player.setPosition(206.0f, 206.0f);
-	// player.setFillColor(sf::Color::Green);
-	// player.setOrigin(50.0f, 50.0f);
-
-	// sf::Texture playerTexture;
-	// playerTexture.loadFromFile("content/tux_from_linux.png");
-	// player.setTexture(&playerTexture);
-
-	// sf::Vector2u textureSize { playerTexture.getSize() };
-
-	// textureSize.x /= 3;
-	// textureSize.y /= 9;
-
-	// Animation animation { 3, textureSize, 5, player };
 	float deltaTime = 0.0f;
-	// animation.updatePosition(deltaTime);
 
 	std::cout << deltaTime << std::endl;
 
@@ -130,10 +106,8 @@ main()
 		// 	player.setPosition(mouseX, mouseY);
 		// }
 
-		window.clear(sf::Color(150, 150, 150));
-		// animation.updatePosition(deltaTime);
-		// window.draw(player);
-		grid.draw();
+		window.clear(sf::Color(0, 0, 0));
+		window.draw(ship);
 		window.display();
 	}
 
