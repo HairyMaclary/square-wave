@@ -1,24 +1,36 @@
 #include "Platform/Platform.hpp"
 #include <iostream>
 
+const float windowWidth { 1200.0f };
+const float windowHeight { 900.0f };
+
+void resizedView(const sf::RenderWindow& window, sf::View& view);
+
+void resizedView(const sf::RenderWindow& window, sf::View& view)
+{
+	float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
+	view.setSize(windowWidth * aspectRatio, windowHeight * aspectRatio);
+}
+
 main()
 {
 	util::Platform platform;
-
 	sf::RenderWindow window;
 	// in Windows at least, this must be called before creating the window
 	float screenScalingFactor = platform.getScreenScalingFactor(window.getSystemHandle());
 	// Use the screenScalingFactor
-	float windowWidth { 1200.0f };
-	float windowHeight { 900.0f };
 	window.create(sf::VideoMode(windowWidth * screenScalingFactor, windowHeight * screenScalingFactor), "Asteroids");
 	platform.setIcon(window.getSystemHandle());
 
-	sf::CircleShape ship(80, 3);
+	sf::FloatRect visibleArea(-windowWidth / 2, -windowHeight / 2, windowWidth, windowHeight);
+	sf::View view(visibleArea);
+
+	const float radius = 40.0f;
+	sf::CircleShape ship((int)radius, 3);
 	ship.setFillColor(sf::Color(0, 0, 0));
 	ship.setOutlineThickness(2);
 	ship.setOutlineColor(sf::Color(250, 255, 255));
-	ship.setPosition(206.0f, 206.0f);
+	ship.setOrigin(sf::Vector2f(radius, 40.0f));
 
 	float deltaTime = 0.0f;
 
@@ -42,6 +54,7 @@ main()
 					break;
 				case sf::Event::Resized:
 					std::cout << "New window width: " << event.size.width << " new height: " << event.size.height << std::endl;
+					resizedView(window, view);
 					break;
 				case sf::Event::TextEntered:
 					printf("%c", event.text.unicode);
@@ -108,6 +121,7 @@ main()
 
 		window.clear(sf::Color(0, 0, 0));
 		window.draw(ship);
+		window.setView(view);
 		window.display();
 	}
 
