@@ -1,10 +1,6 @@
+#include "./Setup/Setup.h"
 #include "Platform/Platform.hpp"
 #include <iostream>
-
-const float windowWidth { 1200.0f };
-const float windowHeight { 900.0f };
-
-void resizedView(const sf::RenderWindow& window, sf::View& view);
 
 void resizedView(const sf::RenderWindow& window, sf::View& view)
 {
