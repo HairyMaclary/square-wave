@@ -1,25 +1,11 @@
 #include "./Setup/Setup.h"
-#include "Platform/Platform.hpp"
 #include <iostream>
-
-void resizedView(const sf::RenderWindow& window, sf::View& view)
-{
-	float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
-	view.setSize(windowWidth * aspectRatio, windowHeight * aspectRatio);
-}
 
 main()
 {
-	util::Platform platform;
 	sf::RenderWindow window;
-	// in Windows at least, this must be called before creating the window
-	float screenScalingFactor = platform.getScreenScalingFactor(window.getSystemHandle());
-	// Use the screenScalingFactor
-	window.create(sf::VideoMode(windowWidth * screenScalingFactor, windowHeight * screenScalingFactor), "Asteroids");
-	platform.setIcon(window.getSystemHandle());
-
-	sf::FloatRect visibleArea(-windowWidth / 2, -windowHeight / 2, windowWidth, windowHeight);
-	sf::View view(visibleArea);
+	sf::View view;
+	generateSetup(window, view);
 
 	const float radius = 40.0f;
 	sf::CircleShape ship((int)radius, 3);
