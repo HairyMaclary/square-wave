@@ -1,4 +1,5 @@
-#include "./Setup/Setup.h"
+#include "./Setup/Setup.h" // initial window dimensions and generateSetup()
+#include "./Ship/Ship.h"
 #include <iostream>
 
 main()
@@ -7,25 +8,17 @@ main()
 	sf::View view;
 	generateSetup(window, view);
 
-	const float radius = 40.0f;
-	sf::CircleShape ship((int)radius, 3);
-	ship.setFillColor(sf::Color(0, 0, 0));
-	ship.setOutlineThickness(2);
-	ship.setOutlineColor(sf::Color(250, 255, 255));
-	ship.setOrigin(sf::Vector2f(radius, 40.0f));
+	Ship ship(window);
 
-	float deltaTime = 0.0f;
+	// float deltaTime = 0.0f;
 
-	std::cout << deltaTime << std::endl;
-
-	sf::Clock clock;
-
+	// sf::Clock clock;
 	sf::Event event;
 
 	while (window.isOpen())
 	{
 
-		deltaTime = clock.restart().asSeconds();
+		// deltaTime = clock.restart().asSeconds();
 
 		while (window.pollEvent(event))
 		{
@@ -102,7 +95,7 @@ main()
 		// }
 
 		window.clear(sf::Color(0, 0, 0));
-		window.draw(ship);
+		ship.draw();
 		window.setView(view);
 		window.display();
 	}
