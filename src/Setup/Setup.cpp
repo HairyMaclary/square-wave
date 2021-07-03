@@ -20,8 +20,12 @@ void generateSetup(sf::RenderWindow& window, sf::View& view)
 	// in Windows at least, this must be called before creating the window
 	float screenScalingFactor = platform.getScreenScalingFactor(window.getSystemHandle());
 
+	// antialiasing
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 8;
+
 	// Use the screenScalingFactor
-	window.create(sf::VideoMode(windowWidth * screenScalingFactor, windowHeight * screenScalingFactor), "Asteroids");
+	window.create(sf::VideoMode(windowWidth * screenScalingFactor, windowHeight * screenScalingFactor), "Asteroids", sf::Style::Default, settings);
 	platform.setIcon(window.getSystemHandle());
 
 	sf::Vector2f center(0, 0);
