@@ -19,9 +19,7 @@ main()
 
 	while (window.isOpen())
 	{
-
 		// deltaTime = clock.restart().asSeconds();
-
 		while (window.pollEvent(event))
 		{
 			handler.process(event);

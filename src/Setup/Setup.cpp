@@ -5,6 +5,9 @@
 extern const float windowWidth { 1200.0f };
 extern const float windowHeight { 900.0f };
 
+//TODO, not working great. Perhaps also need .scale()
+// as wel; as rolling our own view. eg .setOrigin()
+// see https://www.sfml-dev.org/tutorials/2.5/graphics-transform.php
 void resizedView(const sf::RenderWindow& window, sf::View& view)
 {
 	float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
