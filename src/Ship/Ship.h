@@ -11,4 +11,5 @@ private:
 public:
 	Ship(sf::RenderWindow& mainWindow);
 	void draw();
+	void turn(float angle);
 };
