@@ -3,7 +3,7 @@
 class Ship
 {
 private:
-	const float radius;
+	const float height;
 	sf::ConvexShape ship;
 	sf::RenderWindow& window;
 	float heading = 0;
