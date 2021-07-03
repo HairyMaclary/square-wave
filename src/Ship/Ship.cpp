@@ -11,13 +11,12 @@ Ship::Ship(sf::RenderWindow& mainWindow) :
 	ship.setFillColor(sf::Color(0, 0, 0));
 	ship.setOutlineThickness(2);
 	ship.setOutlineColor(sf::Color(250, 255, 255));
-	ship.rotate(heading); // relative, otherwise use setRotation()
+	ship.setRotation(heading); // relative, otherwise use setRotation()
 }
 
 void Ship::draw()
 {
-	turn(0.5f);
-	ship.rotate(heading);
+	ship.setRotation(heading);
 	window.draw(ship);
 }
 

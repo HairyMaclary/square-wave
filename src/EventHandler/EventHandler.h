@@ -1,5 +1,4 @@
 #pragma once
-
 #include "../Setup/Setup.h"
 
 class EventHandler
@@ -9,6 +8,5 @@ private:
 
 public:
 	EventHandler(sf::RenderWindow& window);
-
 	void process(sf::Event& event);
 };

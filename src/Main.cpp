@@ -10,8 +10,6 @@ main()
 	generateSetup(window, view);
 
 	Ship ship(window);
-	sf::CircleShape circle(200.f, 80);
-	circle.setOrigin(200.0f, 200.0f);
 
 	// float deltaTime = 0.0f;
 	// sf::Clock clock;
@@ -26,8 +24,17 @@ main()
 			handler.process(event);
 		}
 
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+		{
+			ship.turn(0.2f);
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+		{
+			ship.turn(-0.2f);
+		}
+
 		window.clear(sf::Color(0, 0, 0));
-		window.draw(circle);
 		ship.draw();
 		window.setView(view);
 		window.display();
