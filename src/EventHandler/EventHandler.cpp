@@ -1,8 +1,7 @@
 #include "./EventHandler.h"
 
-EventHandler::EventHandler(sf::RenderWindow& window, sf::View& view) :
-	window { window },
-	view { view }
+EventHandler::EventHandler(sf::RenderWindow& window) :
+	window { window }
 {
 }
 
@@ -15,7 +14,7 @@ void EventHandler::process(sf::Event& event)
 			break;
 		case sf::Event::Resized:
 			std::cout << "New window width: " << event.size.width << " new height: " << event.size.height << std::endl;
-			resizedView(window, view);
+			resizedView(window);
 			break;
 		case sf::Event::TextEntered:
 			printf("%c", event.text.unicode);
