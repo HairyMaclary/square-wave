@@ -4,8 +4,9 @@ class Ship
 {
 private:
 	const float radius;
-	sf::CircleShape ship;
+	sf::ConvexShape ship;
 	sf::RenderWindow& window;
+	float heading = 90;
 
 public:
 	Ship(sf::RenderWindow& mainWindow);
