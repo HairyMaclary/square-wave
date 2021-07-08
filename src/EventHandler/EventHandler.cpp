@@ -1,7 +1,8 @@
 #include "./EventHandler.h"
 
-EventHandler::EventHandler(sf::RenderWindow& window) :
-	window { window }
+EventHandler::EventHandler(sf::RenderWindow& window, Ship& ship) :
+	window { window },
+	ship { ship }
 {
 }
 
@@ -13,20 +14,15 @@ void EventHandler::process(sf::Event& event)
 			window.close();
 			break;
 		case sf::Event::Resized:
-			std::cout << "New window width: " << event.size.width << " new height: " << event.size.height << std::endl;
 			resizedView(window);
 			break;
 		case sf::Event::TextEntered:
 			printf("%c", event.text.unicode);
 			break;
 		case sf::Event::KeyPressed:
-			if (event.key.code == sf::Keyboard::Key::A)
+			if (event.key.code == sf::Keyboard::Key::Up)
 			{
-				// player.move(-1.00f, 0.0f);
-			}
-			if (event.key.code == sf::Keyboard::Key::D)
-			{
-				// player.move(1.00f, 0.0f);
+				ship.boost();
 			}
 			break;
 		case sf::Event::GainedFocus:
