@@ -1,4 +1,5 @@
 #include "./Ship.h"
+#include "./Setup/Setup.h"
 #include <iostream>
 #include <math.h>
 
@@ -17,13 +18,12 @@ Ship::Ship(sf::RenderWindow& mainWindow) :
 	// ship.setOrigin(10.0f, 10.0f);
 
 	//TODO, get the origin sorted out so that collisions and lasers bolts will line up
-	// TODO: get back into the video and the get the physic multipliers sorted out.
 }
 
-void Ship::draw()
+void Ship::draw(float deltaTime)
 {
 	ship.setRotation(heading);
-	update();
+	update(deltaTime);
 	window.draw(ship);
 }
 
@@ -32,23 +32,34 @@ void Ship::turn(float angle)
 	heading += angle;
 }
 
-void Ship::update()
+void Ship::update(float deltaTime)
 {
-	position.x += velocity.x;
-	position.y += velocity.y;
+	// velocity is not frame or machine specific
+	runningTime += deltaTime;
+	checkKeys();
+	if (runningTime > maxTime)
+	{
+		runningTime = 0;
+		if (boosting)
+		{
+			boost();
+		}
+		edges();
+		velocity.x *= velocityDrag;
+		velocity.y *= velocityDrag;
+		position.x += velocity.x;
+		position.y += velocity.y;
 
-	velocity.x *= 0.7;
-	velocity.y *= 0.7;
-
-	ship.setPosition(position.x, position.y);
+		ship.setPosition(position.x, position.y);
+	}
 }
 
 void Ship::boost()
 {
 	float vectorLength = std::sqrt(2);
 	float radians = heading * pi / 180.0f;
-	float xForce = vectorLength * std::sin(radians);
-	float yForce = vectorLength * -std::cos(radians);
+	float xForce = vectorLength * std::sin(radians) * inertia;
+	float yForce = vectorLength * -std::cos(radians) * inertia;
 
 	velocity.x += xForce;
 	velocity.y += yForce;
@@ -64,4 +75,61 @@ void Ship::setPoints()
 	ship.setPoint(0, nosePoint);
 	ship.setPoint(1, portPoint);
 	ship.setPoint(2, starboardPoint);
+}
+
+void Ship::reset()
+{
+	velocity.x = 0;
+	velocity.y = 0;
+	position.x = 0;
+	position.y = 0;
+	heading = 0;
+	ship.setPosition(position.x, position.y);
+}
+
+void Ship::checkKeys()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+	{
+		turn(turnRate);
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+	{
+		turn(-turnRate);
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+	{
+		boosting = true;
+	}
+	else
+	{
+		boosting = false;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+	{
+		reset();
+	}
+}
+
+void Ship::edges()
+{
+	if (position.x > windowWidth / 2 + height)
+	{
+		position.x = -windowWidth / 2 - height;
+	}
+	else if (position.x < -windowWidth / 2 - height)
+	{
+		position.x = windowWidth / 2 + height;
+	}
+	else if (position.y > windowHeight / 2 + height)
+	{
+		position.y = -windowHeight / 2 - height;
+	}
+	else if (position.y < -windowHeight / 2 - height)
+	{
+		position.y = windowHeight / 2 + height;
+	}
 }

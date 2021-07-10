@@ -2,15 +2,15 @@
 #include "./Setup.h"
 #include "Platform/Platform.hpp"
 
-extern const float windowWidth { 1200.0f };
-extern const float windowHeight { 900.0f };
+float windowWidth = 1200.0f;
+float windowHeight = 900.0f;
 
 void resizedView(const sf::RenderWindow& window)
 {
-	float newWindowWidth = float(window.getSize().x);
-	float newWindowHeight = float(window.getSize().y);
+	windowWidth = float(window.getSize().x);
+	windowHeight = float(window.getSize().y);
 	sf::View view = window.getView();
-	view.setSize(newWindowWidth, newWindowHeight);
+	view.setSize(windowWidth, windowHeight);
 }
 
 void generateSetup(sf::RenderWindow& window, sf::View& view)

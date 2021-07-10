@@ -20,10 +20,10 @@ void EventHandler::process(sf::Event& event)
 			printf("%c", event.text.unicode);
 			break;
 		case sf::Event::KeyPressed:
-			if (event.key.code == sf::Keyboard::Key::Up)
-			{
-				ship.boost();
-			}
+			// if (event.key.code == sf::Keyboard::Key::Up)
+			// {
+			// 	ship.boost();
+			// }
 			break;
 		case sf::Event::GainedFocus:
 		case sf::Event::KeyReleased:
