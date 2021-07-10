@@ -6,9 +6,7 @@
 const float pi = float(std::atan(1) * 4);
 
 Ship::Ship(sf::RenderWindow& mainWindow) :
-	height { 20.0f },
-	window { mainWindow },
-	heading { 0 }
+	window { mainWindow }
 {
 	ship.setPointCount(3);
 	ship.setFillColor(sf::Color(0, 0, 0));

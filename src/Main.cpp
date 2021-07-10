@@ -1,3 +1,4 @@
+#include "./Asteroid/Asteroid.h"
 #include "./EventHandler/EventHandler.h"
 #include "./Setup/Setup.h" // initial window dimensions and generateSetup()
 #include "./Ship/Ship.h"

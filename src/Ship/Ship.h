@@ -3,18 +3,19 @@
 class Ship
 {
 private:
-	sf::ConvexShape ship;
 	sf::RenderWindow& window;
+	const float height { 20.f };
 	sf::Vector2f position { 0.0f, 0.0f };
 	sf::Vector2f velocity { 0.0f, 0.0f };
-	const float height;
 	const float velocityDrag { 0.98f };
 	const float maxTime { 1.0f / 60.0f }; // 60fps
 	const float turnRate { 0.15f };
 	const float inertia { 0.8f };
-	float heading;
 	float runningTime { 0 };
 	bool boosting { false };
+
+	sf::ConvexShape ship;
+	float heading { 0 };
 
 	void update(float deltaTime);
 	void setPoints();
