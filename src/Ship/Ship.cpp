@@ -3,6 +3,8 @@
 #include <iostream>
 #include <math.h>
 
+//TODO central location for this. Also used in asteroid.
+// Possibly even consinder extending sf::vector with p5 like functionality.
 const float pi = float(std::atan(1) * 4);
 
 Ship::Ship(sf::RenderWindow& mainWindow) :

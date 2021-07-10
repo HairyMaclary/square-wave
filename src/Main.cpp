@@ -12,6 +12,8 @@ main()
 
 	Ship ship(window);
 
+	Asteroid ast1(window);
+
 	sf::Font font;
 	if (!font.loadFromFile("src/fonts/open-sans/OpenSans-Regular.ttf"))
 	{
@@ -62,6 +64,7 @@ main()
 
 		window.clear(sf::Color(0, 0, 0));
 		window.setView(view);
+		ast1.draw();
 		ship.draw(deltaTime);
 		window.draw(tl);
 		window.draw(tr);
