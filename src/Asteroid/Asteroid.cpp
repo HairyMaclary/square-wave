@@ -36,7 +36,6 @@ void Asteroid::draw()
 
 void Asteroid::setUp()
 {
-	srand(time(0));
 	getTotalPointCount();
 	makeAsteroid();
 }
@@ -57,7 +56,8 @@ void Asteroid::makeAsteroid()
 
 	for (uint i = 0; i < totalPoints; i++)
 	{
-		const float pointDistance = (float)std::rand() / RAND_MAX * localMaxRadius;
+		const float minDistance = 15.0f;
+		const float pointDistance = (float)std::rand() / RAND_MAX * localMaxRadius + minDistance;
 		const float angle = (i + 1) * radiansPerPoint;
 		const float xPos = pointDistance * std::sin(angle);
 		const float yPos = pointDistance * -std::cos(angle);

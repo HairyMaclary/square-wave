@@ -7,7 +7,7 @@ private:
 	sf::Vector2f position;
 	float radius;
 	// TODO make this static???
-	const float maxRadius { 100.0f };
+	const float maxRadius { 55.0f };
 	float localMaxRadius;
 	uint totalPoints;
 	sf::ConvexShape asteroid;

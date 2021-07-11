@@ -3,16 +3,21 @@
 #include "./Setup/Setup.h" // initial window dimensions and generateSetup()
 #include "./Ship/Ship.h"
 #include <iostream>
+#include <vector> // std::vector
 
 main()
 {
+	// move this to the asteroids class when it is created.
+	srand(time(0));
+
 	sf::RenderWindow window;
 	sf::View view;
 	generateSetup(window, view);
 
 	Ship ship(window);
 
-	Asteroid ast1(window);
+	// How do we use a loop or something more sensible here?
+	std::vector<Asteroid> asteroids { Asteroid(window), Asteroid(window), Asteroid(window), Asteroid(window), Asteroid(window) };
 
 	sf::Font font;
 	if (!font.loadFromFile("src/fonts/open-sans/OpenSans-Regular.ttf"))
@@ -64,7 +69,10 @@ main()
 
 		window.clear(sf::Color(0, 0, 0));
 		window.setView(view);
-		ast1.draw();
+		for (Asteroid asteroid : asteroids)
+		{
+			asteroid.draw();
+		}
 		ship.draw(deltaTime);
 		window.draw(tl);
 		window.draw(tr);
@@ -72,6 +80,5 @@ main()
 		window.draw(br);
 		window.display();
 	}
-
 	return 0;
 }
