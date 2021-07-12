@@ -1,5 +1,7 @@
 #pragma once
 
+#include "./Asteroid/Asteroid.h"
+
 class Ship
 {
 private:
@@ -13,9 +15,9 @@ private:
 	const float inertia { 0.6f };
 	float runningTime { 0 };
 	bool boosting { false };
-
 	sf::ConvexShape ship;
 	float heading { 0 };
+	bool alive { true };
 
 	void update(float deltaTime);
 	void setPoints();
@@ -28,4 +30,5 @@ public:
 	void turn(float angle);
 	void boost();
 	void reset();
+	void hits(Asteroid& asteroid);
 };

@@ -76,14 +76,16 @@ main()
 		window.clear(sf::Color(0, 0, 0));
 		window.setView(view);
 
+		ship.draw(deltaTime);
+
 		// TODO talk to Matt about a for loop on this
 		// for (Asteroid asteroid : asteroids)
 		for (uint i = 0; i < asteroids.size(); i++)
 		{
 			asteroids[i].draw();
+			ship.hits(asteroids[i]);
 		}
 
-		ship.draw(deltaTime);
 		window.draw(tl);
 		window.draw(tr);
 		window.draw(bl);

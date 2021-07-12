@@ -109,3 +109,8 @@ void Asteroid::edges()
 		position.y = windowHeight / 2 + height;
 	}
 }
+
+sf::FloatRect Asteroid::getGlobalBounds()
+{
+	return asteroid.getGlobalBounds();
+}

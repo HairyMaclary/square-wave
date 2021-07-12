@@ -25,4 +25,5 @@ public:
 	Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius);
 	Asteroid(sf::RenderWindow& window);
 	void draw();
+	sf::FloatRect getGlobalBounds();
 };

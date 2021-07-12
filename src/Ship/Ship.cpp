@@ -1,10 +1,11 @@
 #include "./Ship.h"
+#include "./Asteroid/Asteroid.h"
 #include "./Setup/Setup.h"
 #include <iostream>
 #include <math.h>
 
 //TODO central location for this. Also used in asteroid.
-// Possibly even consinder extending sf::vector with p5 like functionality.
+// Possibly even consider extending sf::vector with p5 like functionality.
 const float pi = float(std::atan(1) * 4);
 
 Ship::Ship(sf::RenderWindow& mainWindow) :
@@ -34,6 +35,10 @@ void Ship::turn(float angle)
 
 void Ship::update(float deltaTime)
 {
+	if (!alive)
+	{
+		return;
+	}
 	// velocity is not frame or machine specific
 	runningTime += deltaTime;
 	checkKeys();
@@ -131,5 +136,15 @@ void Ship::edges()
 	else if (position.y < -windowHeight / 2 - height)
 	{
 		position.y = windowHeight / 2 + height;
+	}
+}
+
+void Ship::hits(Asteroid& asteroid)
+{
+	sf::FloatRect shipBoundingBox = ship.getGlobalBounds();
+	sf::FloatRect asteroidBoundingBox = asteroid.getGlobalBounds();
+	if (asteroidBoundingBox.intersects(shipBoundingBox))
+	{
+		alive = false;
 	}
 }
