@@ -54,23 +54,27 @@ void Asteroid::setUp()
 
 void Asteroid::getTotalPointCount()
 {
-	const uint maxBasePoints = 15;
-	const uint minPoints = 5; // 15 + 5 will given a max of 20 points
+	const uint maxBasePoints = 20;
+	const uint minPoints = 10; // will given a max of 20 points
 	totalPoints = std::round((float)std::rand() / RAND_MAX * maxBasePoints) + minPoints;
 }
 
 void Asteroid::makeAsteroid()
 {
-	// totalPoints = 4;
 	asteroid.setPointCount(totalPoints);
 
 	const float radiansPerPoint = 2 * pi / totalPoints;
+	// const float minDistance = maxRadius - 30.0f;
+	// float pointDistance = ((float)std::rand() / RAND_MAX) * localMaxRadius + minDistance;
+	float pointDistance = localMaxRadius;
 
 	for (uint i = 0; i < totalPoints; i++)
 	{
-		const float minDistance = 15.0f;
-		const float pointDistance = (float)std::rand() / RAND_MAX * localMaxRadius + minDistance;
+		// const float pointDistance = (float)std::rand() / RAND_MAX * localMaxRadius + minDistance;
 		const float angle = (i + 1) * radiansPerPoint;
+
+		float lengthVariationCoef = ((float)std::rand() / RAND_MAX) * 0.4 + 0.8;
+		pointDistance = pointDistance * lengthVariationCoef;
 		const float xPos = pointDistance * std::sin(angle);
 		const float yPos = pointDistance * -std::cos(angle);
 		sf::Vector2f relativeVector(xPos, yPos);
