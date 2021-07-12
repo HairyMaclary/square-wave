@@ -4,7 +4,8 @@ class Asteroid
 {
 private:
 	sf::RenderWindow& window;
-	sf::Vector2f position;
+	sf::Vector2f position { 0.0f, 0.0f };
+	sf::Vector2f velocity;
 	float radius;
 	// TODO make this static???
 	const float maxRadius { 55.0f };
@@ -17,6 +18,8 @@ private:
 	void setUp();
 	void getTotalPointCount();
 	void makeAsteroid();
+	void randomVelocity();
+	void edges();
 
 public:
 	Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius);

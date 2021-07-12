@@ -3,8 +3,8 @@
 #include <stdlib.h>		 /* srand, rand */
 #include <time.h>		 /* time */
 
-//TODO central location for this. Also used in ship.cpp.
-// Possibly even consinder extending sf::vector with p5 like functionality.
+//TODO central location for this vector stuff. Also used in ship.cpp.
+// Possibly even consider extending sf::vector with p5 like functionality.
 const float pi = float(std::atan(1) * 4);
 
 void Asteroid::getRandomPosition()
@@ -13,13 +13,13 @@ void Asteroid::getRandomPosition()
 	position.y = (float)std::rand() / RAND_MAX * windowHeight - (windowHeight / 2);
 }
 
-Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius) :
-	window { window },
-	position { position },
-	localMaxRadius { radius }
-{
-	setUp();
-}
+// Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius) :
+// 	window { window },
+// 	position { position },
+// 	localMaxRadius { radius }
+// {
+// 	setUp();
+// }
 
 Asteroid::Asteroid(sf::RenderWindow& window) :
 	window { window },
@@ -31,6 +31,17 @@ Asteroid::Asteroid(sf::RenderWindow& window) :
 
 void Asteroid::draw()
 {
+	edges();
+	float newPosX = velocity.x + position.x;
+	float newPosY = position.y + velocity.y;
+	// position.x = newPosX;
+	// position.y = newPosY;
+	// this->position = sf::Vector2f(newPosX, newPosY);
+	asteroid.setPosition(newPosX, newPosY);
+	position.x = newPosX;
+	position.y = newPosY;
+	asteroid.setPosition(position.x, position.y);
+
 	window.draw(asteroid);
 }
 
@@ -38,6 +49,7 @@ void Asteroid::setUp()
 {
 	getTotalPointCount();
 	makeAsteroid();
+	randomVelocity();
 }
 
 void Asteroid::getTotalPointCount()
@@ -69,4 +81,31 @@ void Asteroid::makeAsteroid()
 	asteroid.setOutlineThickness(2);
 	asteroid.setOutlineColor(sf::Color(250, 255, 255));
 	asteroid.setPosition(position);
+}
+
+void Asteroid::randomVelocity()
+{
+	velocity.x = (float)std::rand() / RAND_MAX * 0.05;
+	velocity.y = (float)std::rand() / RAND_MAX * 0.05;
+}
+
+void Asteroid::edges()
+{
+	const float height = 20;
+	if (position.x > windowWidth / 2 + height)
+	{
+		position.x = -windowWidth / 2 - height;
+	}
+	else if (position.x < -windowWidth / 2 - height)
+	{
+		position.x = windowWidth / 2 + height;
+	}
+	else if (position.y > windowHeight / 2 + height)
+	{
+		position.y = -windowHeight / 2 - height;
+	}
+	else if (position.y < -windowHeight / 2 - height)
+	{
+		position.y = windowHeight / 2 + height;
+	}
 }

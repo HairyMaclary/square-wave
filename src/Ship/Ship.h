@@ -6,7 +6,7 @@ private:
 	sf::RenderWindow& window;
 	const float height { 20.f };
 	sf::Vector2f position { 0.0f, 0.0f };
-	sf::Vector2f velocity { 0.0f, 0.0f };
+	sf::Vector2f velocity;
 	const float velocityDrag { 0.98f };
 	const float maxTime { 1.0f / 60.0f }; // 60fps
 	const float turnRate { 0.15f };
