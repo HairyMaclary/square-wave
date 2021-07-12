@@ -17,7 +17,13 @@ main()
 	Ship ship(window);
 
 	// How do we use a loop or something more sensible here?
-	std::vector<Asteroid> asteroids { Asteroid(window) /*, Asteroid(window), Asteroid(window), Asteroid(window), Asteroid(window)*/ };
+	std::vector<Asteroid> asteroids {
+		Asteroid(window),
+		Asteroid(window),
+		Asteroid(window),
+		Asteroid(window),
+		Asteroid(window)
+	};
 
 	sf::Font font;
 	if (!font.loadFromFile("src/fonts/open-sans/OpenSans-Regular.ttf"))
@@ -69,10 +75,14 @@ main()
 
 		window.clear(sf::Color(0, 0, 0));
 		window.setView(view);
+
+		// TODO talk to Matt about a for loop on this
 		// for (Asteroid asteroid : asteroids)
-		// {
-		asteroids[0].draw();
-		// }
+		for (uint i = 0; i < asteroids.size(); i++)
+		{
+			asteroids[i].draw();
+		}
+
 		ship.draw(deltaTime);
 		window.draw(tl);
 		window.draw(tr);

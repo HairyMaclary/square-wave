@@ -10,7 +10,7 @@ private:
 	const float velocityDrag { 0.98f };
 	const float maxTime { 1.0f / 60.0f }; // 60fps
 	const float turnRate { 0.15f };
-	const float inertia { 0.8f };
+	const float inertia { 0.6f };
 	float runningTime { 0 };
 	bool boosting { false };
 
