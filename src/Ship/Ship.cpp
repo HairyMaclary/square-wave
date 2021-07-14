@@ -151,21 +151,18 @@ void Ship::hits(Asteroid& asteroid)
 {
 	if (alive)
 	{
-		// TODO wrap up this and other cases of asteroid.asteroid in getter so that asteroid is
-		// encapsulated
-		const uint asteroidPointCount = asteroid.asteroid.getPointCount();
+		const uint asteroidPointCount = asteroid.totalPoints;
 
 		for (uint i = 0; i < asteroidPointCount; i++)
 		{
-			sf::Vector2f asteroidPointLocal = asteroid.asteroid.getPoint(i);
-			sf::Vector2f asteroidPointGlobal = asteroid.asteroid.getTransform().transformPoint(asteroidPointLocal);
+			sf::Vector2f asteroidPointGlobal = asteroid.getPointTransform(i);
 
 			for (uint j = 0; j < 3; j++)
 			{
 				sf::Vector2f shipPointLocal = ship.getPoint(i);
 				sf::Vector2f shipPointGlobal = ship.getTransform().transformPoint(shipPointLocal);
 				const float dist = distance(asteroidPointGlobal, shipPointGlobal);
-				if (dist <= 22.0f)
+				if (dist <= 21.0f) // don't know why this fudge factor is needed
 				{
 					alive = false;
 					return;

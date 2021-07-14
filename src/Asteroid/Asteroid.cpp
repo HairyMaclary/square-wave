@@ -47,12 +47,12 @@ void Asteroid::draw()
 
 void Asteroid::setUp()
 {
-	getTotalPointCount();
+	randomPointCount();
 	makeAsteroid();
 	randomVelocity();
 }
 
-void Asteroid::getTotalPointCount()
+void Asteroid::randomPointCount()
 {
 	const uint maxBasePoints = 20;
 	const uint minPoints = 10; // will given a max of 20 points
@@ -114,7 +114,8 @@ void Asteroid::edges()
 	}
 }
 
-sf::FloatRect Asteroid::getGlobalBounds()
+sf::Vector2f Asteroid::getPointTransform(uint pointIndex)
 {
-	return asteroid.getGlobalBounds();
+	sf::Vector2f localPoint = asteroid.getPoint(pointIndex);
+	return asteroid.getTransform().transformPoint(localPoint);
 }

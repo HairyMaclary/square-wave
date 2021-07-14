@@ -10,21 +10,21 @@ private:
 	// TODO make this static???
 	const float maxRadius { 40.0f };
 	float localMaxRadius;
-	uint totalPoints;
+	sf::ConvexShape asteroid;
 
 	void getRandomRadius();
 	void getRandomPosition();
 	void setUp();
-	void getTotalPointCount();
+	void randomPointCount();
 	void makeAsteroid();
 	void randomVelocity();
 	void edges();
 
 public:
-	sf::ConvexShape asteroid;
+	uint totalPoints;
 
 	Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius);
 	Asteroid(sf::RenderWindow& window);
 	void draw();
-	sf::FloatRect getGlobalBounds();
+	sf::Vector2f getPointTransform(uint pointIndex);
 };
