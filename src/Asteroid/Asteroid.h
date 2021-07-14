@@ -11,7 +11,6 @@ private:
 	const float maxRadius { 40.0f };
 	float localMaxRadius;
 	uint totalPoints;
-	sf::ConvexShape asteroid;
 
 	void getRandomRadius();
 	void getRandomPosition();
@@ -22,6 +21,8 @@ private:
 	void edges();
 
 public:
+	sf::ConvexShape asteroid;
+
 	Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius);
 	Asteroid(sf::RenderWindow& window);
 	void draw();

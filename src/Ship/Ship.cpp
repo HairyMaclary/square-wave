@@ -35,13 +35,14 @@ void Ship::turn(float angle)
 
 void Ship::update(float deltaTime)
 {
+	checkKeys();
 	if (!alive)
 	{
 		return;
 	}
 	// velocity is not frame or machine specific
 	runningTime += deltaTime;
-	checkKeys();
+
 	if (runningTime > maxTime)
 	{
 		runningTime = 0;
@@ -89,6 +90,7 @@ void Ship::reset()
 	position.x = 0;
 	position.y = 0;
 	heading = 0;
+	alive = true;
 	ship.setPosition(position.x, position.y);
 }
 
@@ -139,12 +141,36 @@ void Ship::edges()
 	}
 }
 
+float Ship::distance(sf::Vector2f& p1, sf::Vector2f& p2)
+{
+	sf::Vector2f diffVec = p1 - p2;
+	return std::sqrt(diffVec.x * diffVec.x + diffVec.y * diffVec.y);
+}
+
 void Ship::hits(Asteroid& asteroid)
 {
-	sf::FloatRect shipBoundingBox = ship.getGlobalBounds();
-	sf::FloatRect asteroidBoundingBox = asteroid.getGlobalBounds();
-	if (asteroidBoundingBox.intersects(shipBoundingBox))
+	if (alive)
 	{
-		alive = false;
+		// TODO wrap up this and other cases of asteroid.asteroid in getter so that asteroid is
+		// encapsulated
+		const uint asteroidPointCount = asteroid.asteroid.getPointCount();
+
+		for (uint i = 0; i < asteroidPointCount; i++)
+		{
+			sf::Vector2f asteroidPointLocal = asteroid.asteroid.getPoint(i);
+			sf::Vector2f asteroidPointGlobal = asteroid.asteroid.getTransform().transformPoint(asteroidPointLocal);
+
+			for (uint j = 0; j < 3; j++)
+			{
+				sf::Vector2f shipPointLocal = ship.getPoint(i);
+				sf::Vector2f shipPointGlobal = ship.getTransform().transformPoint(shipPointLocal);
+				const float dist = distance(asteroidPointGlobal, shipPointGlobal);
+				if (dist <= 22.0f)
+				{
+					alive = false;
+					return;
+				}
+			}
+		}
 	}
 }

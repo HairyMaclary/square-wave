@@ -23,6 +23,7 @@ private:
 	void setPoints();
 	void checkKeys();
 	void edges();
+	float distance(sf::Vector2f& p1, sf::Vector2f& p2);
 
 public:
 	Ship(sf::RenderWindow& mainWindow);
