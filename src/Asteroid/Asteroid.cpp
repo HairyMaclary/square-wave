@@ -69,7 +69,6 @@ void Asteroid::makeAsteroid()
 		sf::Vector2f relativeVector(xPos, yPos);
 		asteroid.setPoint(i, relativeVector);
 	}
-	// asteroid.setRadius(radius);
 	asteroid.setFillColor(sf::Color(0, 0, 0));
 	asteroid.setOutlineThickness(2);
 	asteroid.setOutlineColor(sf::Color(250, 255, 255));

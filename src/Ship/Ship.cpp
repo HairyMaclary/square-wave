@@ -4,7 +4,7 @@
 #include <iostream>
 #include <math.h>
 
-//TODO central location for this. Also used in asteroid.
+//TODO central location for this. Also used in asteroid and laser.
 // Possibly even consider extending sf::vector with p5 like functionality.
 const float pi = float(std::atan(1) * 4);
 
@@ -16,7 +16,8 @@ Ship::Ship(sf::RenderWindow& mainWindow) :
 	ship.setOutlineThickness(2);
 	ship.setOutlineColor(sf::Color(250, 255, 255));
 	setPoints();
-	// ship.setOrigin(10.0f, 10.0f);
+	// ship.setOrigin(0.0f, 0.0f);
+	std::cout << "origin: " << ship.getOrigin().x << " , " << ship.getOrigin().y << std::endl;
 
 	//TODO, get the origin sorted out so that collisions and lasers bolts will line up
 }
