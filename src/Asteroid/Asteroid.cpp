@@ -13,13 +13,13 @@ void Asteroid::getRandomPosition()
 	position.y = (float)std::rand() / RAND_MAX * windowHeight - (windowHeight / 2);
 }
 
-// Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius) :
-// 	window { window },
-// 	position { position },
-// 	localMaxRadius { radius }
-// {
-// 	setUp();
-// }
+Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius) :
+	window { window },
+	position { position },
+	localMaxRadius { radius }
+{
+	setUp();
+}
 
 Asteroid::Asteroid(sf::RenderWindow& window) :
 	window { window },
@@ -32,14 +32,7 @@ Asteroid::Asteroid(sf::RenderWindow& window) :
 void Asteroid::draw()
 {
 	edges();
-	float newPosX = velocity.x + position.x;
-	float newPosY = position.y + velocity.y;
-	// position.x = newPosX;
-	// position.y = newPosY;
-	// this->position = sf::Vector2f(newPosX, newPosY);
-	asteroid.setPosition(newPosX, newPosY);
-	position.x = newPosX;
-	position.y = newPosY;
+	position += velocity;
 	asteroid.setPosition(position.x, position.y);
 
 	window.draw(asteroid);
@@ -64,15 +57,11 @@ void Asteroid::makeAsteroid()
 	asteroid.setPointCount(totalPoints);
 
 	const float radiansPerPoint = 2 * pi / totalPoints;
-	// const float minDistance = maxRadius - 30.0f;
-	// float pointDistance = ((float)std::rand() / RAND_MAX) * localMaxRadius + minDistance;
 	float pointDistance = localMaxRadius;
 
 	for (uint i = 0; i < totalPoints; i++)
 	{
-		// const float pointDistance = (float)std::rand() / RAND_MAX * localMaxRadius + minDistance;
 		const float angle = (i + 1) * radiansPerPoint;
-
 		float lengthVariationCoef = ((float)std::rand() / RAND_MAX) * 0.4 + 0.8;
 		pointDistance = pointDistance * lengthVariationCoef;
 		const float xPos = pointDistance * std::sin(angle);

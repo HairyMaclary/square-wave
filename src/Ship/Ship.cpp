@@ -162,7 +162,9 @@ void Ship::hits(Asteroid& asteroid)
 				sf::Vector2f shipPointLocal = ship.getPoint(i);
 				sf::Vector2f shipPointGlobal = ship.getTransform().transformPoint(shipPointLocal);
 				const float dist = distance(asteroidPointGlobal, shipPointGlobal);
-				if (dist <= 21.0f) // don't know why this fudge factor is needed
+				// Don't know why this fudge factor is needed. Points not lining up?
+				const float ohFudge = 20.0f;
+				if (dist <= ohFudge)
 				{
 					alive = false;
 					return;
