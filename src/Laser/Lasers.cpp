@@ -16,10 +16,17 @@ void Lasers::checkKeys()
 	}
 }
 
-void Lasers::draw()
+void Lasers::draw(float deltaTime)
 {
+	// velocity is not frame or machine specific
+	runningTime += deltaTime;
+	if (runningTime > maxTime)
+	{
+		runningTime = 0;
+		checkKeys();
+	}
+
 	deleteOldBolts();
-	checkKeys();
 	for (uint i = 0; i < bolts.size(); i++)
 	{
 		bolts[i]->draw();

@@ -66,7 +66,7 @@ main()
 		}
 
 		// window.draw(tl);
-		lasers.draw();
+		lasers.draw(deltaTime);
 		ship.draw(deltaTime);
 		window.display();
 	}

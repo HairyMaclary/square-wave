@@ -9,11 +9,13 @@ private:
 	sf::RenderWindow& window;
 	Ship& ship;
 	std::vector<Laser*> bolts;
+	float maxTime { 1.0f / 5.0f };
+	float runningTime { maxTime };
 
 	void checkKeys();
 	void deleteOldBolts();
 
 public:
 	Lasers(sf::RenderWindow& window, Ship& craft);
-	void draw();
+	void draw(float deltaTime);
 };
