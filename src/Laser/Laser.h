@@ -13,8 +13,12 @@ private:
 	void velocityFromAngle(float angle);
 
 public:
-	Laser(sf::RenderWindow& window, sf::Vector2f shipPos, float shipHeading);
+	Laser(
+		sf::RenderWindow& renderWindow,
+		sf::Vector2f shipPos,
+		float shipHeading);
+	// ~Laser();
 	void update();
 	void draw();
-	bool offScreen();
+	bool offscreen();
 };

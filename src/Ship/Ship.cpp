@@ -1,6 +1,6 @@
 #include "./Ship.h"
 #include "./Asteroid/Asteroid.h"
-#include "./Setup/Setup.h"
+#include "./Setup/Setup.h" // window dimensions eg windowWidth
 #include <iostream>
 #include <math.h>
 
@@ -16,10 +16,6 @@ Ship::Ship(sf::RenderWindow& mainWindow) :
 	ship.setOutlineThickness(2);
 	ship.setOutlineColor(sf::Color(250, 255, 255));
 	setPoints();
-	// ship.setOrigin(0.0f, 0.0f);
-	std::cout << "origin: " << ship.getOrigin().x << " , " << ship.getOrigin().y << std::endl;
-
-	//TODO, get the origin sorted out so that collisions and lasers bolts will line up
 }
 
 void Ship::draw(float deltaTime)
