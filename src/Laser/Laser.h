@@ -17,7 +17,6 @@ public:
 		sf::RenderWindow& renderWindow,
 		sf::Vector2f shipPos,
 		float shipHeading);
-	// ~Laser();
 	void update();
 	void draw();
 	bool offscreen();

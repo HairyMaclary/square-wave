@@ -41,13 +41,18 @@ bool Laser::offscreen()
 }
 
 // TODO: improve slow performance while firing
+// one idea is to try transform with matricies.
+// could also try removing delta time check on laser creation
+// Another option is to set up the vectors in the asteroid object and
+// just keep them around all the time but not draw them. Perhaps creating
+// them is the casue of the lag.
 bool Laser::hitsAsteroid(Asteroid& asteroid)
 {
 	const uint asteroidPointCount = asteroid.totalPoints;
 	sf::FloatRect laserGlobalBounds = bolt.getGlobalBounds();
 
 	// for each pair of neighbouring points around the asteroid make a vector.
-	// create new line shapes for each vector and check it's bounding box
+	// Create new line shapes for each vector and check it's bounding box
 	// for a collision
 	for (uint i = 0; i < asteroidPointCount; i++)
 	{
