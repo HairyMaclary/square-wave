@@ -1,6 +1,5 @@
 #include "./Laser.h"
 #include "./Setup/Setup.h" // window dimensions eg windowWidt
-#include <vector>		   // std::vector
 
 const float pi = float(std::atan(1) * 4);
 
@@ -41,29 +40,32 @@ bool Laser::offscreen()
 	return false;
 }
 
-// todo refactor. Don't need tow loops
 bool Laser::hitsAsteroid(Asteroid& asteroid)
 {
 	const uint asteroidPointCount = asteroid.totalPoints;
-	std::vector<sf::FloatRect> perimeterArray(asteroidPointCount);
+	sf::FloatRect laserGlobalBounds = bolt.getGlobalBounds();
 
-	// make an array of 2D vectors that describe the perimerter of the asteroid
+	// make an array of 2D vectors that describe the perimeter of the asteroid
 	for (uint i = 0; i < asteroidPointCount; i++)
 	{
 		sf::Vector2f firstPoint = asteroid.getPointTransform(i);
 		// make sure we loop back to the zeroth value for the last section
 		sf::Vector2f secondPoint = asteroid.getPointTransform((i + 1) % (asteroidPointCount));
-		sf::Vector2f diffVec = firstPoint - secondPoint;
+		sf::Vector2f diffVec = secondPoint - firstPoint;
 		sf::RectangleShape perimeterSection(diffVec);
-		sf::FloatRect bounds = perimeterSection.getGlobalBounds();
-		perimeterArray[i] = bounds;
-	}
 
-	for (uint i = 0; i < asteroidPointCount; i++)
-	{
-		sf::FloatRect laserGlobalBounds = bolt.getGlobalBounds();
+		float rotation = asteroid.asteroid.getRotation();
+		sf::Vector2f scale = asteroid.asteroid.getScale();
+		sf::Vector2f position(firstPoint);
 
-		if (laserGlobalBounds.intersects(perimeterArray[i]))
+		perimeterSection.setScale(scale);
+		perimeterSection.setPosition(position);
+		perimeterSection.setRotation(rotation);
+		window.draw(perimeterSection);
+
+		sf::FloatRect asteroidBounds = perimeterSection.getGlobalBounds();
+
+		if (laserGlobalBounds.intersects(asteroidBounds))
 		{
 			return true;
 		}
