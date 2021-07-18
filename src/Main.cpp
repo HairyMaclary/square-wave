@@ -70,8 +70,20 @@ main()
 			const bool hit = lasers.hits(*asteroids[i]);
 			if (hit)
 			{
-				std::cout << "HIT" << std::endl;
+				auto radius = (*position)->getRadius();
+				auto pos = (*position)->getPosition();
+
+				delete (*position);
+				(*position) = nullptr;
 				asteroids.erase(position);
+				std::cout << "radius " << radius << std::endl;
+
+				if (radius > 5)
+				{
+					std::cout << "size " << asteroids.size() << std::endl;
+					asteroids.emplace_back(new Asteroid(window, pos, radius / 2));
+					asteroids.emplace_back(new Asteroid(window, pos, radius / 2));
+				}
 			}
 			else
 			{

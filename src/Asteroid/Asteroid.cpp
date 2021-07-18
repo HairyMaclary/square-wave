@@ -107,3 +107,13 @@ sf::Vector2f Asteroid::getPointTransform(uint pointIndex)
 	sf::Vector2f localPoint = asteroid.getPoint(pointIndex);
 	return asteroid.getTransform().transformPoint(localPoint);
 }
+
+sf::Vector2f Asteroid::getPosition()
+{
+	return position;
+}
+
+float Asteroid::getRadius()
+{
+	return localMaxRadius;
+}
