@@ -40,12 +40,15 @@ bool Laser::offscreen()
 	return false;
 }
 
+// TODO: improve slow performance while firing
 bool Laser::hitsAsteroid(Asteroid& asteroid)
 {
 	const uint asteroidPointCount = asteroid.totalPoints;
 	sf::FloatRect laserGlobalBounds = bolt.getGlobalBounds();
 
-	// make an array of 2D vectors that describe the perimeter of the asteroid
+	// for each pair of neighbouring points around the asteroid make a vector.
+	// create new line shapes for each vector and check it's bounding box
+	// for a collision
 	for (uint i = 0; i < asteroidPointCount; i++)
 	{
 		sf::Vector2f firstPoint = asteroid.getPointTransform(i);
@@ -61,7 +64,7 @@ bool Laser::hitsAsteroid(Asteroid& asteroid)
 		perimeterSection.setScale(scale);
 		perimeterSection.setPosition(position);
 		perimeterSection.setRotation(rotation);
-		window.draw(perimeterSection);
+		// window.draw(perimeterSection); // useful for debugging
 
 		sf::FloatRect asteroidBounds = perimeterSection.getGlobalBounds();
 
@@ -70,12 +73,5 @@ bool Laser::hitsAsteroid(Asteroid& asteroid)
 			return true;
 		}
 	}
-
 	return false;
-}
-
-float Laser::distance(sf::Vector2f& p1, sf::Vector2f& p2)
-{
-	sf::Vector2f diffVec = p1 - p2;
-	return std::sqrt(diffVec.x * diffVec.x + diffVec.y * diffVec.y);
 }

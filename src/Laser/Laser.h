@@ -11,7 +11,6 @@ private:
 
 	void hits(Asteroid& asteroid);
 	void velocityFromAngle(float angle);
-	float distance(sf::Vector2f& p1, sf::Vector2f& p2);
 
 public:
 	Laser(
