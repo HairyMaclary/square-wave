@@ -18,13 +18,14 @@ main()
 	Ship ship(window);
 
 	Lasers lasers(window, ship);
+
 	// How do we use a loop or something more sensible here?
-	std::vector<Asteroid> asteroids {
-		Asteroid(window),
-		Asteroid(window),
-		Asteroid(window),
-		Asteroid(window),
-		Asteroid(window)
+	std::vector<Asteroid*> asteroids {
+		new Asteroid(window),
+		new Asteroid(window),
+		new Asteroid(window),
+		new Asteroid(window),
+		new Asteroid(window)
 	};
 
 	// 	sf::Font font;
@@ -62,17 +63,22 @@ main()
 		// TODO talk to Matt about a for loop on this
 		// for (Asteroid asteroid : asteroids)
 		// Also put all all asteroids in their own parent class.
+		std::vector<Asteroid*>::iterator position = asteroids.begin();
+
 		for (uint i = 0; i < asteroids.size(); i++)
 		{
-			// bool isHit = lasers.hits(asteroids[i]);
-			const bool hit = lasers.hits(asteroids[i]);
+			const bool hit = lasers.hits(*asteroids[i]);
 			if (hit)
 			{
 				std::cout << "HIT" << std::endl;
+				asteroids.erase(position);
 			}
-
-			asteroids[i].draw();
-			ship.hits(asteroids[i]);
+			else
+			{
+				++position;
+				(*asteroids[i]).draw();
+				ship.hits(*asteroids[i]);
+			}
 		}
 
 		// window.draw(tl);
