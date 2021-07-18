@@ -65,7 +65,9 @@ bool Lasers::hits(Asteroid& asteroid)
 	{
 		if ((*position)->hitsAsteroid(asteroid))
 		{
-			// TODO delete the laser bolt.
+			delete (*position);
+			(*position) = nullptr;
+			position = bolts.erase(position);
 			return true;
 		}
 		else
