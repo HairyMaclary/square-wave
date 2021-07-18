@@ -1,5 +1,6 @@
 #pragma once
 #include "../src/Ship/Ship.h"
+#include "./Asteroid/Asteroid.h"
 #include "./Laser.h"
 #include <vector>
 
@@ -18,4 +19,5 @@ private:
 public:
 	Lasers(sf::RenderWindow& window, Ship& craft);
 	void draw(float deltaTime);
+	bool hits(Asteroid& asteroid);
 };

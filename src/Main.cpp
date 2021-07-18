@@ -57,16 +57,25 @@ main()
 		window.clear(sf::Color(0, 0, 0));
 		window.setView(view);
 
+		lasers.draw(deltaTime);
+
 		// TODO talk to Matt about a for loop on this
 		// for (Asteroid asteroid : asteroids)
+		// Also put all all asteroids in their own parent class.
 		for (uint i = 0; i < asteroids.size(); i++)
 		{
+			// bool isHit = lasers.hits(asteroids[i]);
+			const bool hit = lasers.hits(asteroids[i]);
+			if (hit)
+			{
+				std::cout << "HIT" << std::endl;
+			}
+
 			asteroids[i].draw();
 			ship.hits(asteroids[i]);
 		}
 
 		// window.draw(tl);
-		lasers.draw(deltaTime);
 		ship.draw(deltaTime);
 		window.display();
 	}

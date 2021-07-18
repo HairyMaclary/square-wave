@@ -57,3 +57,21 @@ void Lasers::deleteOldBolts()
 		}
 	}
 }
+
+bool Lasers::hits(Asteroid& asteroid)
+{
+	std::vector<Laser*>::iterator position;
+	for (position = bolts.begin(); position != bolts.end();)
+	{
+		if ((*position)->hitsAsteroid(asteroid))
+		{
+			// TODO delete the laser bolt.
+			return true;
+		}
+		else
+		{
+			++position;
+		}
+	}
+	return false;
+}
