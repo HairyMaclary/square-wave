@@ -19,14 +19,12 @@ main()
 
 	Lasers lasers(window, ship);
 
-	// How do we use a loop or something more sensible here?
-	std::vector<Asteroid*> asteroids {
-		new Asteroid(window),
-		new Asteroid(window),
-		new Asteroid(window),
-		new Asteroid(window),
-		new Asteroid(window)
-	};
+	std::vector<Asteroid*> asteroids;
+	const uint initialAsteroidCount = 5;
+	for (uint i = 0; i < initialAsteroidCount; ++i)
+	{
+		asteroids.emplace_back(new Asteroid(window));
+	}
 
 	// 	sf::Font font;
 	// if (!font.loadFromFile("src/fonts/open-sans/OpenSans-Regular.ttf"))
