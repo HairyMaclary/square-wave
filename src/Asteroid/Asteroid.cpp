@@ -33,7 +33,7 @@ Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius
 	setUp();
 }
 
-Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f shipPos) :
+Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f& shipPos) :
 	window { window },
 	localMaxRadius { maxRadius }
 {

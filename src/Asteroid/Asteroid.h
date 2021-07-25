@@ -29,7 +29,7 @@ public:
 	sf::ConvexShape asteroid;
 
 	Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius);
-	Asteroid(sf::RenderWindow& window, sf::Vector2f shipPos);
+	Asteroid(sf::RenderWindow& window, sf::Vector2f& shipPos);
 	void draw();
 	sf::Vector2f getPointTransform(uint pointIndex);
 	sf::Vector2f getPosition();
