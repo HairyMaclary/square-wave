@@ -16,6 +16,13 @@ Ship::Ship(sf::RenderWindow& mainWindow) :
 	ship.setOutlineThickness(2);
 	ship.setOutlineColor(sf::Color(250, 255, 255));
 	setPoints();
+
+	if (!soundBuffer.loadFromFile("src/sounds/explosion.wav"))
+	{
+		std::cout << "Bugger, sound load did not work" << std::endl;
+	}
+
+	destructionSound.setBuffer(soundBuffer);
 }
 
 void Ship::draw(float deltaTime)
@@ -157,28 +164,9 @@ void Ship::hits(Asteroid& asteroid)
 		if (asteroid.hit(bounds))
 		{
 			alive = false;
+			destructionSound.play();
 			return;
 		}
-		// const uint asteroidPointCount = asteroid.totalPoints;
-
-		// for (uint i = 0; i < asteroidPointCount; i++)
-		// {
-		// 	sf::Vector2f asteroidPointGlobal = asteroid.getPointTransform(i);
-
-		// 	for (uint j = 0; j < 3; j++)
-		// 	{
-		// 		sf::Vector2f shipPointLocal = ship.getPoint(i);
-		// 		sf::Vector2f shipPointGlobal = ship.getTransform().transformPoint(shipPointLocal);
-		// 		const float dist = distance(asteroidPointGlobal, shipPointGlobal);
-		// 		// Don't know why this fudge factor is needed. Points not lining up?
-		// 		const float ohFudge = 20.0f;
-		// 		if (dist <= ohFudge)
-		// 		{
-		// 			alive = false;
-		// 			return;
-		// 		}
-		// 	}
-		// }
 	}
 }
 

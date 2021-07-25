@@ -6,7 +6,21 @@
 Lasers::Lasers(sf::RenderWindow& renderWindow, Ship& craft) :
 	window { renderWindow },
 	ship { craft }
-{}
+{
+	if (!destructionSoundBuffer.loadFromFile("src/sounds/break.wav"))
+	{
+		std::cout << "Bugger, break sound load did not work" << std::endl;
+	}
+
+	destructionSound.setBuffer(destructionSoundBuffer);
+
+	if (!boltSoundBuffer.loadFromFile("src/sounds/laser.wav"))
+	{
+		std::cout << "Bugger, laser sound load did not work" << std::endl;
+	}
+
+	boltSound.setBuffer(boltSoundBuffer);
+}
 
 void Lasers::checkKeys()
 {
@@ -14,6 +28,7 @@ void Lasers::checkKeys()
 	{
 		Laser* ptr = new Laser(window, ship.position, ship.heading);
 		bolts.push_back(ptr);
+		boltSound.play();
 	}
 }
 
@@ -70,6 +85,7 @@ bool Lasers::hits(Asteroid& asteroid)
 			delete (*iterator);
 			(*iterator) = nullptr;
 			iterator = bolts.erase(iterator);
+			destructionSound.play();
 			return true;
 		}
 		else

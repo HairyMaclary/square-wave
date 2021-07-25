@@ -12,6 +12,10 @@ private:
 	std::vector<Laser*> bolts;
 	float maxTime { 1.0f / 5.0f };
 	float runningTime { maxTime };
+	sf::SoundBuffer destructionSoundBuffer;
+	sf::Sound destructionSound;
+	sf::SoundBuffer boltSoundBuffer;
+	sf::Sound boltSound;
 
 	void checkKeys();
 	void deleteOldBolts();

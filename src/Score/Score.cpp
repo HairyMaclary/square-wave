@@ -1,6 +1,7 @@
 #include "./Score.h"
 #include "./Setup/Setup.h" // initial window dimensions and generateSetup()
-#include <math.h>		   // round
+#include <iostream>
+#include <math.h> // round
 #include <string>
 
 Score::Score(sf::RenderWindow& renderWindow) :

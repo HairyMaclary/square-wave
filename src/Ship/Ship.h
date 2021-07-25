@@ -16,6 +16,8 @@ private:
 	bool boosting { false };
 	sf::ConvexShape ship;
 	bool alive { true };
+	sf::SoundBuffer soundBuffer;
+	sf::Sound destructionSound;
 
 	void update(float deltaTime);
 	void setPoints();

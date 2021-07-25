@@ -47,7 +47,6 @@ main()
 
 		lasers.draw(deltaTime);
 
-		// TODO put all all asteroids in their own parent class.
 		std::vector<Asteroid*>::iterator position = asteroids.begin();
 
 		for (uint i = 0; i < asteroids.size(); i++)
