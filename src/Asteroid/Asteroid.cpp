@@ -152,15 +152,13 @@ float Asteroid::getRadius()
 	return localMaxRadius;
 }
 
-// template <typename T>
-bool Asteroid::hit(Laser& obj)
+bool Asteroid::hit(const sf::FloatRect& bounds)
 {
-	sf::FloatRect objGlobalBounds = obj.bolt.getGlobalBounds();
 	for (uint i = 0; i < totalPoints; i++)
 	{
 		sf::FloatRect segmentBounds = boundaryLines[i].getGlobalBounds();
 
-		if (segmentBounds.intersects(objGlobalBounds))
+		if (segmentBounds.intersects(bounds))
 		{
 			return true;
 		}

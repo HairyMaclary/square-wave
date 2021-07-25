@@ -20,9 +20,13 @@ Ship::Ship(sf::RenderWindow& mainWindow) :
 
 void Ship::draw(float deltaTime)
 {
+
 	ship.setRotation(heading);
 	update(deltaTime);
-	window.draw(ship);
+	if (alive)
+	{
+		window.draw(ship);
+	}
 }
 
 void Ship::turn(float angle)
@@ -148,25 +152,37 @@ void Ship::hits(Asteroid& asteroid)
 {
 	if (alive)
 	{
-		const uint asteroidPointCount = asteroid.totalPoints;
+		const sf::FloatRect& bounds = ship.getGlobalBounds();
 
-		for (uint i = 0; i < asteroidPointCount; i++)
+		if (asteroid.hit(bounds))
 		{
-			sf::Vector2f asteroidPointGlobal = asteroid.getPointTransform(i);
-
-			for (uint j = 0; j < 3; j++)
-			{
-				sf::Vector2f shipPointLocal = ship.getPoint(i);
-				sf::Vector2f shipPointGlobal = ship.getTransform().transformPoint(shipPointLocal);
-				const float dist = distance(asteroidPointGlobal, shipPointGlobal);
-				// Don't know why this fudge factor is needed. Points not lining up?
-				const float ohFudge = 20.0f;
-				if (dist <= ohFudge)
-				{
-					alive = false;
-					return;
-				}
-			}
+			alive = false;
+			return;
 		}
+		// const uint asteroidPointCount = asteroid.totalPoints;
+
+		// for (uint i = 0; i < asteroidPointCount; i++)
+		// {
+		// 	sf::Vector2f asteroidPointGlobal = asteroid.getPointTransform(i);
+
+		// 	for (uint j = 0; j < 3; j++)
+		// 	{
+		// 		sf::Vector2f shipPointLocal = ship.getPoint(i);
+		// 		sf::Vector2f shipPointGlobal = ship.getTransform().transformPoint(shipPointLocal);
+		// 		const float dist = distance(asteroidPointGlobal, shipPointGlobal);
+		// 		// Don't know why this fudge factor is needed. Points not lining up?
+		// 		const float ohFudge = 20.0f;
+		// 		if (dist <= ohFudge)
+		// 		{
+		// 			alive = false;
+		// 			return;
+		// 		}
+		// 	}
+		// }
 	}
+}
+
+sf::FloatRect Ship::getGlobalBounds()
+{
+	return ship.getGlobalBounds();
 }

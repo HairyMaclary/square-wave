@@ -33,4 +33,5 @@ public:
 	void boost();
 	void reset();
 	void hits(Asteroid& asteroid);
+	sf::FloatRect getGlobalBounds();
 };

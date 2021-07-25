@@ -34,7 +34,5 @@ public:
 	sf::Vector2f getPointTransform(uint pointIndex);
 	sf::Vector2f getPosition();
 	float getRadius();
-
-	// template <typename T>
-	bool hit(Laser& obj);
+	bool hit(const sf::FloatRect& bounds);
 };

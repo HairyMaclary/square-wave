@@ -1,19 +1,16 @@
 #pragma once
-// #include "./Asteroid/Asteroid.h"
 
 class Laser
 {
 private:
 	sf::RenderWindow& window;
+	sf::RectangleShape bolt;
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 
-	// void hits(Asteroid& asteroid);
 	void velocityFromAngle(float angle);
 
 public:
-	sf::RectangleShape bolt;
-
 	Laser(
 		sf::RenderWindow& renderWindow,
 		sf::Vector2f shipPos,
@@ -21,5 +18,5 @@ public:
 	void update();
 	void draw();
 	bool offscreen();
-	// bool hitsAsteroid(Asteroid& asteroid);
+	sf::FloatRect getGlobalBounds();
 };

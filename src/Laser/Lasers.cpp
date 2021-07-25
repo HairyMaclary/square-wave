@@ -64,8 +64,8 @@ bool Lasers::hits(Asteroid& asteroid)
 	std::vector<Laser*>::iterator iterator;
 	for (iterator = bolts.begin(); iterator != bolts.end();)
 	{
-		// if ((*iterator)->hitsAsteroid(asteroid))
-		if (asteroid.hit(**iterator))
+		const sf::FloatRect& bounds = (*iterator)->getGlobalBounds();
+		if (asteroid.hit(bounds))
 		{
 			delete (*iterator);
 			(*iterator) = nullptr;
