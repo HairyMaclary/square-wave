@@ -30,6 +30,9 @@ main()
 	Score score(window);
 
 	float deltaTime = 0.0f;
+	float runningTime = 0.0f;
+	float spawnTime = 10.0f;
+
 	sf::Clock clock;
 	sf::Event event;
 	EventHandler handler(window, ship);
@@ -75,6 +78,14 @@ main()
 				(*asteroids[i]).draw();
 				ship.hits(*asteroids[i]);
 			}
+		}
+
+		runningTime += deltaTime;
+		if (runningTime > spawnTime)
+		{
+			runningTime = 0;
+			spawnTime *= 0.9f;
+			asteroids.emplace_back(new Asteroid(window));
 		}
 
 		score.draw();
