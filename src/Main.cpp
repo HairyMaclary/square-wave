@@ -81,7 +81,7 @@ main()
 		}
 
 		runningTime += deltaTime;
-		if (runningTime > spawnTime)
+		if (ship.alive && runningTime > spawnTime)
 		{
 			runningTime = 0;
 			spawnTime *= 0.9f;

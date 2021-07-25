@@ -15,7 +15,6 @@ private:
 	float runningTime { 0 };
 	bool boosting { false };
 	sf::ConvexShape ship;
-	bool alive { true };
 	sf::SoundBuffer soundBuffer;
 	sf::Sound destructionSound;
 
@@ -27,6 +26,7 @@ private:
 
 public:
 	sf::Vector2f position { 0.0f, 0.0f };
+	bool alive { true };
 	float heading { 0 };
 
 	Ship(sf::RenderWindow& mainWindow);
