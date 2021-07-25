@@ -2,8 +2,11 @@
 #include "./Setup.h"
 #include "Platform/Platform.hpp"
 
-float windowWidth = 1200.0f;
-float windowHeight = 900.0f;
+namespace window
+{
+float width = 1200.0f;
+float height = 900.0f;
+}
 
 namespace constants
 {
@@ -12,9 +15,9 @@ extern const float pi { float(std::atan(1) * 4) };
 
 void resizedView(const sf::RenderWindow& window, sf::View& view)
 {
-	windowWidth = float(window.getSize().x);
-	windowHeight = float(window.getSize().y);
-	view.setSize(windowWidth, windowHeight);
+	window::width = float(window.getSize().x);
+	window::height = float(window.getSize().y);
+	view.setSize(window::width, window::height);
 }
 
 void generateSetup(sf::RenderWindow& window, sf::View& view)
@@ -29,11 +32,11 @@ void generateSetup(sf::RenderWindow& window, sf::View& view)
 	settings.antialiasingLevel = 8;
 
 	// Use the screenScalingFactor
-	window.create(sf::VideoMode(windowWidth * screenScalingFactor, windowHeight * screenScalingFactor), "Asteroids", sf::Style::Default, settings);
+	window.create(sf::VideoMode(window::width * screenScalingFactor, window::height * screenScalingFactor), "Asteroids", sf::Style::Default, settings);
 	platform.setIcon(window.getSystemHandle());
 
 	sf::Vector2f center(0, 0);
-	sf::Vector2f size(windowWidth, windowHeight);
+	sf::Vector2f size(window::width, window::height);
 	view.setCenter(center);
 	view.setSize(size);
 }

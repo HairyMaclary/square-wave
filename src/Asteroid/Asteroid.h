@@ -10,7 +10,10 @@ private:
 	sf::Vector2f position { 0.0f, 0.0f };
 	const float maxRadius { 40.0f };
 	float localMaxRadius;
+	// Never drawn. Only for collision detection
 	std::vector<sf::RectangleShape> boundaryLines;
+	sf::ConvexShape asteroid;
+	uint totalPoints;
 
 	void getRandomRadius();
 	void getRandomPosition(sf::Vector2f shipPos);
@@ -22,9 +25,6 @@ private:
 	void makeCollisonBoundary();
 
 public:
-	uint totalPoints;
-	sf::ConvexShape asteroid;
-
 	Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius);
 	Asteroid(sf::RenderWindow& window, sf::Vector2f& shipPos);
 	void draw();

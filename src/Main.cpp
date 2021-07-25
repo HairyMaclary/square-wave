@@ -5,14 +5,9 @@
 #include "./Setup/Setup.h" // initial window dimensions and generateSetup()
 #include "./Ship/DeadShip.h"
 #include "./Ship/Ship.h"
-#include <iostream>
-#include <vector> // std::vector
 
 main()
 {
-	// move this to the asteroids class when it is created.
-	srand(time(0));
-
 	sf::RenderWindow window;
 	sf::View view;
 	generateSetup(window, view);

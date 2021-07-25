@@ -9,6 +9,7 @@ Asteroids::Asteroids(sf::RenderWindow& renderwindow, Ship& ship, Lasers& lasers,
 	lasers { lasers },
 	score { score }
 {
+	srand(time(0));
 
 	for (uint i = 0; i < initialAsteroidCount; ++i)
 	{

@@ -2,8 +2,11 @@
 #ifndef SETUP_H
 #define SETUP_H
 
-extern float windowWidth;
-extern float windowHeight;
+namespace window
+{
+extern float width;
+extern float height;
+}
 
 namespace constants
 {

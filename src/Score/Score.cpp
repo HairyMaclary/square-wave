@@ -1,5 +1,5 @@
 #include "./Score.h"
-#include "./Setup/Setup.h" // initial window dimensions and generateSetup()
+#include "./Setup/Setup.h" // window dimensions and generateSetup()
 #include <iostream>
 #include <math.h> // round
 #include <string>
@@ -19,7 +19,7 @@ Score::Score(sf::RenderWindow& renderWindow) :
 	scoreBox.setString(scoreText);
 	scoreBox.setCharacterSize(70);
 	scoreBox.setFillColor(sf::Color::White);
-	scoreBox.setPosition(-windowWidth / 2 * 0.9, -windowHeight / 2 * 0.9);
+	scoreBox.setPosition(-window::width / 2 * 0.9, -window::height / 2 * 0.9);
 }
 
 void Score::update(float radius)
@@ -31,7 +31,7 @@ void Score::update(float radius)
 
 void Score::draw()
 {
-	// incase of resize
-	scoreBox.setPosition(-windowWidth / 2 * 0.9, -windowHeight / 2 * 0.9);
+	// move score on resize
+	scoreBox.setPosition(-window::width / 2 * 0.9, -window::height / 2 * 0.9);
 	window.draw(scoreBox);
 }

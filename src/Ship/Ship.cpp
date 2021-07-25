@@ -134,21 +134,21 @@ void Ship::checkKeys()
 
 void Ship::edges()
 {
-	if (position.x > windowWidth / 2 + height)
+	if (position.x > window::width / 2 + height)
 	{
-		position.x = -windowWidth / 2 - height;
+		position.x = -window::width / 2 - height;
 	}
-	else if (position.x < -windowWidth / 2 - height)
+	else if (position.x < -window::width / 2 - height)
 	{
-		position.x = windowWidth / 2 + height;
+		position.x = window::width / 2 + height;
 	}
-	else if (position.y > windowHeight / 2 + height)
+	else if (position.y > window::height / 2 + height)
 	{
-		position.y = -windowHeight / 2 - height;
+		position.y = -window::height / 2 - height;
 	}
-	else if (position.y < -windowHeight / 2 - height)
+	else if (position.y < -window::height / 2 - height)
 	{
-		position.y = windowHeight / 2 + height;
+		position.y = window::height / 2 + height;
 	}
 }
 
@@ -175,11 +175,6 @@ void Ship::hits(Asteroid& asteroid)
 			}
 		}
 	}
-}
-
-sf::FloatRect Ship::getGlobalBounds()
-{
-	return ship.getGlobalBounds();
 }
 
 void Ship::makeCollisonBoundary()

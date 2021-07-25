@@ -24,8 +24,8 @@ Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f& shipPos) :
 
 void Asteroid::getRandomPosition(sf::Vector2f shipPos)
 {
-	position.x = (float)std::rand() / RAND_MAX * windowWidth - (windowWidth / 2);
-	position.y = (float)std::rand() / RAND_MAX * windowHeight - (windowHeight / 2);
+	position.x = (float)std::rand() / RAND_MAX * window::width - (window::width / 2);
+	position.y = (float)std::rand() / RAND_MAX * window::height - (window::height / 2);
 
 	// Don't allow an asteroid to spawn too close to the ship
 	float safeDistance = 100.0f;
@@ -33,8 +33,8 @@ void Asteroid::getRandomPosition(sf::Vector2f shipPos)
 	float distance = sqrt(pow(vecToShip.y, 2) + pow(vecToShip.x, 2));
 	while (distance < safeDistance)
 	{
-		position.x = (float)std::rand() / RAND_MAX * windowWidth - (windowWidth / 2);
-		position.y = (float)std::rand() / RAND_MAX * windowHeight - (windowHeight / 2);
+		position.x = (float)std::rand() / RAND_MAX * window::width - (window::width / 2);
+		position.y = (float)std::rand() / RAND_MAX * window::height - (window::height / 2);
 		vecToShip = shipPos - position;
 		distance = sqrt(pow(vecToShip.y, 2) + pow(vecToShip.x, 2));
 	}
@@ -51,7 +51,6 @@ void Asteroid::draw()
 	{
 		sf::Vector2f pos = getPointTransform(i);
 		boundaryLines[i].setPosition(pos.x, pos.y);
-		// window.draw(boundaryLines[i]);
 	}
 }
 
@@ -126,21 +125,21 @@ void Asteroid::randomVelocity()
 void Asteroid::edges()
 {
 	const float height = 20;
-	if (position.x > windowWidth / 2 + height)
+	if (position.x > window::width / 2 + height)
 	{
-		position.x = -windowWidth / 2 - height;
+		position.x = -window::width / 2 - height;
 	}
-	else if (position.x < -windowWidth / 2 - height)
+	else if (position.x < -window::width / 2 - height)
 	{
-		position.x = windowWidth / 2 + height;
+		position.x = window::width / 2 + height;
 	}
-	else if (position.y > windowHeight / 2 + height)
+	else if (position.y > window::height / 2 + height)
 	{
-		position.y = -windowHeight / 2 - height;
+		position.y = -window::height / 2 - height;
 	}
-	else if (position.y < -windowHeight / 2 - height)
+	else if (position.y < -window::height / 2 - height)
 	{
-		position.y = windowHeight / 2 + height;
+		position.y = window::height / 2 + height;
 	}
 }
 

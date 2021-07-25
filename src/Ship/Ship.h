@@ -18,9 +18,9 @@ private:
 	sf::ConvexShape ship;
 	sf::SoundBuffer soundBuffer;
 	sf::Sound destructionSound;
-	sf::Vector2f getPointTransform(uint pointIndex);
 	std::vector<sf::RectangleShape> boundaryLines;
 
+	sf::Vector2f getPointTransform(uint pointIndex);
 	void update(float deltaTime);
 	void setPoints();
 	void checkKeys();
@@ -39,5 +39,4 @@ public:
 	void boost();
 	void reset();
 	void hits(Asteroid& asteroid);
-	sf::FloatRect getGlobalBounds();
 };

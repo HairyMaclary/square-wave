@@ -31,7 +31,7 @@ void Laser::draw()
 bool Laser::offscreen()
 {
 	if (
-		position.x < -windowWidth / 2 || position.x > windowWidth / 2 || position.y < -windowHeight / 2 || position.y > windowHeight / 2)
+		position.x < -window::width / 2 || position.x > window::width / 2 || position.y < -window::height / 2 || position.y > window::height / 2)
 	{
 		return true;
 	}

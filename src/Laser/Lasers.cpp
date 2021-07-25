@@ -55,7 +55,8 @@ void Lasers::deleteOldBolts()
 	{
 		if ((*position)->offscreen())
 		{
-			// TODO Is this enough to prevent memory leaks?
+			// Is this enough to prevent memory leaks?
+
 			// When bolts was an array of Lasers instead of an array of pointers to lasers
 			// then erase() would fail. It was essentially moving elements of the vector
 			// around, and since the window member was a reference, it is treated as a
