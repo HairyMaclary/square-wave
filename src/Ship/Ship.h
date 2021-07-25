@@ -7,7 +7,7 @@ class Ship
 private:
 	sf::RenderWindow& window;
 	const float height { 20.f };
-	const uint pointCount { 3 };
+	const uint pointCount { 3 }; // ship is a triangle
 	sf::Vector2f velocity;
 	const float velocityDrag { 0.98f };
 	const float maxTime { 1.0f / 60.0f }; // 60fps

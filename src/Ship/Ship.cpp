@@ -126,6 +126,7 @@ void Ship::checkKeys()
 		boosting = false;
 	}
 
+	// for testing only
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
 	{
 		reset();

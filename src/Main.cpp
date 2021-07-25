@@ -3,6 +3,7 @@
 #include "./Laser/Lasers.h"
 #include "./Score/Score.h"
 #include "./Setup/Setup.h" // initial window dimensions and generateSetup()
+#include "./Ship/DeadShip.h"
 #include "./Ship/Ship.h"
 #include <iostream>
 #include <vector> // std::vector
@@ -17,6 +18,7 @@ main()
 	generateSetup(window, view);
 
 	Ship ship(window);
+	DeadShip deadShip(window);
 
 	Lasers lasers(window, ship);
 
@@ -86,6 +88,11 @@ main()
 			runningTime = 0;
 			spawnTime *= 0.9f;
 			asteroids.emplace_back(new Asteroid(window, ship.position));
+		}
+
+		if (!ship.alive)
+		{
+			deadShip.draw(deltaTime, ship.position);
 		}
 
 		score.draw();
