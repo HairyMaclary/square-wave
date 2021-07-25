@@ -96,9 +96,9 @@ void Asteroid::makeAsteroid()
 
 void Asteroid::makeCollisonBoundary()
 {
-	// Creating a set of verticies around the asteroid.
-	// Not creating a normal sf::shape because we want a finer control over hit-boxes.
-	// Instead we have a group of vectors constructed between adjacent points.
+	// The asteroids collision is large. So a series of lines are created
+	// between adjancent verticies around the asteroid. These lines
+	// are not drawn but instead are only used for collision detection.
 	for (uint i = 0; i < totalPoints; i++)
 	{
 		sf::Vector2f firstPoint = getPointTransform(i);
