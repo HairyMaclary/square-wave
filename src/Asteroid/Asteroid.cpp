@@ -106,8 +106,6 @@ void Asteroid::makeCollisonBoundary()
 		sf::Vector2f secondPoint = getPointTransform((i + 1) % (totalPoints));
 		sf::Vector2f diffVec = secondPoint - firstPoint;
 
-		boundaryPoints.emplace_back(new sf::Vector2f(diffVec.x, diffVec.y));
-
 		sf::RectangleShape perimeterSection(diffVec);
 
 		float rotation = asteroid.getRotation();

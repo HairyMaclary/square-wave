@@ -8,11 +8,8 @@ private:
 	sf::RenderWindow& window;
 	sf::Vector2f velocity;
 	sf::Vector2f position { 0.0f, 0.0f };
-	// TODO make this static???
 	const float maxRadius { 40.0f };
 	float localMaxRadius;
-	// sf::ConvexShape asteroid;
-	std::vector<sf::Vector2f*> boundaryPoints;
 	std::vector<sf::RectangleShape> boundaryLines;
 
 	void getRandomRadius();
