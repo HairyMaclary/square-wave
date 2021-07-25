@@ -1,4 +1,4 @@
-#include "./Asteroid/Asteroid.h"
+#include "./Asteroid/Asteroids.h"
 #include "./EventHandler/EventHandler.h"
 #include "./Laser/Lasers.h"
 #include "./Score/Score.h"
@@ -19,22 +19,11 @@ main()
 
 	Ship ship(window);
 	DeadShip deadShip(window);
-
 	Lasers lasers(window, ship);
-
-	std::vector<Asteroid*> asteroids;
-	const uint initialAsteroidCount = 5;
-	for (uint i = 0; i < initialAsteroidCount; ++i)
-	{
-		asteroids.emplace_back(new Asteroid(window, ship.position));
-	}
-
 	Score score(window);
+	Asteroids asteroids(window, ship, lasers, score);
 
 	float deltaTime = 0.0f;
-	float runningTime = 0.0f;
-	float spawnTime = 10.0f;
-
 	sf::Clock clock;
 	sf::Event event;
 	EventHandler handler(window, ship, view);
@@ -51,49 +40,8 @@ main()
 		window.setView(view);
 
 		lasers.draw(deltaTime);
-
-		std::vector<Asteroid*>::iterator position = asteroids.begin();
-
-		for (uint i = 0; i < asteroids.size(); i++)
-		{
-			const bool hit = lasers.hits(*asteroids[i]);
-			if (hit)
-			{
-				auto radius = (*position)->getRadius();
-				auto pos = (*position)->getPosition();
-
-				delete (*position);
-				(*position) = nullptr;
-				asteroids.erase(position);
-
-				score.update(radius);
-
-				if (radius > 5)
-				{
-					asteroids.emplace_back(new Asteroid(window, pos, radius / 2));
-					asteroids.emplace_back(new Asteroid(window, pos, radius / 2));
-				}
-			}
-			else
-			{
-				++position;
-				(*asteroids[i]).draw();
-				ship.hits(*asteroids[i]);
-			}
-		}
-
-		runningTime += deltaTime;
-		if (ship.alive && runningTime > spawnTime)
-		{
-			runningTime = 0;
-			spawnTime *= 0.95f;
-			// prevent late game 'avalanche' of asteroids
-			if (spawnTime < 3)
-			{
-				spawnTime = 10.0f;
-			}
-			asteroids.emplace_back(new Asteroid(window, ship.position));
-		}
+		asteroids.draw(deltaTime);
+		ship.draw(deltaTime);
 
 		if (!ship.alive)
 		{
@@ -101,7 +49,6 @@ main()
 		}
 
 		score.draw();
-		ship.draw(deltaTime);
 		window.display();
 	}
 	return 0;
