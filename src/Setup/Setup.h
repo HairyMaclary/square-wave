@@ -5,6 +5,11 @@
 extern float windowWidth;
 extern float windowHeight;
 
+namespace constants
+{
+extern const float pi;
+}
+
 void resizedView(const sf::RenderWindow& window);
 void generateSetup(sf::RenderWindow& window, sf::View& view);
 

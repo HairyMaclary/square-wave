@@ -1,7 +1,5 @@
 #include "./Laser.h"
-#include "./Setup/Setup.h" // window dimensions eg windowWidt
-
-const float pi = float(std::atan(1) * 4);
+#include "./Setup/Setup.h" // window dimensions eg windowWidth, and pi
 
 Laser::Laser(sf::RenderWindow& renderWindow, sf::Vector2f shipPos, float shipHeading) :
 	window { renderWindow },
@@ -18,7 +16,7 @@ void Laser::velocityFromAngle(float angle)
 {
 	const float speed = 0.5f;
 	float vectorLength = std::sqrt(2 * speed * speed);
-	float radians = angle * pi / 180.0f;
+	float radians = angle * constants::pi / 180.0f;
 	velocity.x = vectorLength * std::sin(radians);
 	velocity.y = vectorLength * -std::cos(radians);
 }

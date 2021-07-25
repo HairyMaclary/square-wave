@@ -1,14 +1,10 @@
 #include "./Asteroid.h"
 #include "./Laser/Laser.h"
-#include "Setup/Setup.h" /* windowWidth, windowHeight */
+#include "Setup/Setup.h" /* windowWidth, windowHeight, pi */
 #include <cmath>		 /* pow */
 #include <math.h>		 /* sqrt */
 #include <stdlib.h>		 /* srand, rand */
 #include <time.h>		 /* time */
-
-//TODO central location for this vector stuff. Also used in ship.cpp.
-// Possibly even consider extending sf::vector with p5 like functionality.
-const float pi = float(std::atan(1) * 4);
 
 void Asteroid::getRandomPosition(sf::Vector2f shipPos)
 {
@@ -79,7 +75,7 @@ void Asteroid::makeAsteroid()
 {
 	asteroid.setPointCount(totalPoints);
 
-	const float radiansPerPoint = 2 * pi / totalPoints;
+	const float radiansPerPoint = 2 * constants::pi / totalPoints;
 	float pointDistance = localMaxRadius;
 
 	for (uint i = 0; i < totalPoints; i++)

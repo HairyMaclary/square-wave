@@ -4,10 +4,6 @@
 #include <iostream>
 #include <math.h>
 
-//TODO central location for this. Also used in asteroid and laser.
-// Possibly even consider extending sf::vector with p5 like functionality.
-const float pi = float(std::atan(1) * 4);
-
 Ship::Ship(sf::RenderWindow& mainWindow) :
 	window { mainWindow }
 {
@@ -71,7 +67,7 @@ void Ship::update(float deltaTime)
 void Ship::boost()
 {
 	float vectorLength = std::sqrt(2);
-	float radians = heading * pi / 180.0f;
+	float radians = heading * constants::pi / 180.0f;
 	float xForce = vectorLength * std::sin(radians) * inertia;
 	float yForce = vectorLength * -std::cos(radians) * inertia;
 

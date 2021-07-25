@@ -5,6 +5,12 @@
 float windowWidth = 1200.0f;
 float windowHeight = 900.0f;
 
+namespace constants
+{
+// float pi = float(std::atan(1) * 4);
+extern const float pi { float(std::atan(1) * 4) };
+}
+
 void resizedView(const sf::RenderWindow& window)
 {
 	windowWidth = float(window.getSize().x);
