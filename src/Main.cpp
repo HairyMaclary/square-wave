@@ -72,6 +72,7 @@ main()
 				delete (*position);
 				(*position) = nullptr;
 				asteroids.erase(position);
+				if (radius > 5)
 				{
 					asteroids.emplace_back(new Asteroid(window, pos, radius / 2));
 					asteroids.emplace_back(new Asteroid(window, pos, radius / 2));
