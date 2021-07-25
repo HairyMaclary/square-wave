@@ -1,6 +1,7 @@
 #include "./Asteroid/Asteroid.h"
 #include "./EventHandler/EventHandler.h"
 #include "./Laser/Lasers.h"
+#include "./Score/Score.h"
 #include "./Setup/Setup.h" // initial window dimensions and generateSetup()
 #include "./Ship/Ship.h"
 #include <iostream>
@@ -26,19 +27,7 @@ main()
 		asteroids.emplace_back(new Asteroid(window));
 	}
 
-	// 	sf::Font font;
-	// if (!font.loadFromFile("src/fonts/open-sans/OpenSans-Regular.ttf"))
-	// {
-	// 	sf::Font::Info info = font.getInfo();
-	// 	std::cout << "Bugger, font load did not work" << info.family << std::endl;
-	// }
-	// const float distance = 100.0f;
-	// sf::Text tl;
-	// tl.setFont(font);
-	// tl.setString("-ve -ve");
-	// tl.setCharacterSize(24);
-	// tl.setFillColor(sf::Color::Red);
-	// tl.setPosition(-distance, -distance);
+	Score score(window);
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
@@ -72,6 +61,9 @@ main()
 				delete (*position);
 				(*position) = nullptr;
 				asteroids.erase(position);
+
+				score.update(radius);
+
 				if (radius > 5)
 				{
 					asteroids.emplace_back(new Asteroid(window, pos, radius / 2));
@@ -86,7 +78,7 @@ main()
 			}
 		}
 
-		// window.draw(tl);
+		score.draw();
 		ship.draw(deltaTime);
 		window.display();
 	}
