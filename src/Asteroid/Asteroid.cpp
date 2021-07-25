@@ -1,6 +1,8 @@
 #include "./Asteroid.h"
 #include "./Laser/Laser.h"
 #include "Setup/Setup.h" /* windowWidth, windowHeight */
+#include <cmath>		 /* pow */
+#include <math.h>		 /* sqrt */
 #include <stdlib.h>		 /* srand, rand */
 #include <time.h>		 /* time */
 
@@ -8,10 +10,23 @@
 // Possibly even consider extending sf::vector with p5 like functionality.
 const float pi = float(std::atan(1) * 4);
 
-void Asteroid::getRandomPosition()
+void Asteroid::getRandomPosition(sf::Vector2f shipPos)
 {
+
 	position.x = (float)std::rand() / RAND_MAX * windowWidth - (windowWidth / 2);
 	position.y = (float)std::rand() / RAND_MAX * windowHeight - (windowHeight / 2);
+
+	// Don't allow an asteroid to spawn too close to the ship
+	float safeDistance = 100.0f;
+	sf::Vector2f vecToShip(shipPos - position);
+	float distance = sqrt(pow(vecToShip.y, 2) + pow(vecToShip.x, 2));
+	while (distance < safeDistance)
+	{
+		position.x = (float)std::rand() / RAND_MAX * windowWidth - (windowWidth / 2);
+		position.y = (float)std::rand() / RAND_MAX * windowHeight - (windowHeight / 2);
+		vecToShip = shipPos - position;
+		distance = sqrt(pow(vecToShip.y, 2) + pow(vecToShip.x, 2));
+	}
 }
 
 Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius) :
@@ -22,11 +37,11 @@ Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius
 	setUp();
 }
 
-Asteroid::Asteroid(sf::RenderWindow& window) :
+Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f shipPos) :
 	window { window },
 	localMaxRadius { maxRadius }
 {
-	getRandomPosition();
+	getRandomPosition(shipPos);
 	setUp();
 }
 

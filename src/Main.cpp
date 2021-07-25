@@ -24,7 +24,7 @@ main()
 	const uint initialAsteroidCount = 5;
 	for (uint i = 0; i < initialAsteroidCount; ++i)
 	{
-		asteroids.emplace_back(new Asteroid(window));
+		asteroids.emplace_back(new Asteroid(window, ship.position));
 	}
 
 	Score score(window);
@@ -85,7 +85,7 @@ main()
 		{
 			runningTime = 0;
 			spawnTime *= 0.9f;
-			asteroids.emplace_back(new Asteroid(window));
+			asteroids.emplace_back(new Asteroid(window, ship.position));
 		}
 
 		score.draw();

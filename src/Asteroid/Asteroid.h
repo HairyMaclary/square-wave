@@ -16,7 +16,7 @@ private:
 	std::vector<sf::RectangleShape> boundaryLines;
 
 	void getRandomRadius();
-	void getRandomPosition();
+	void getRandomPosition(sf::Vector2f shipPos);
 	void setUp();
 	void randomPointCount();
 	void makeAsteroid();
@@ -29,7 +29,7 @@ public:
 	sf::ConvexShape asteroid;
 
 	Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius);
-	Asteroid(sf::RenderWindow& window);
+	Asteroid(sf::RenderWindow& window, sf::Vector2f shipPos);
 	void draw();
 	sf::Vector2f getPointTransform(uint pointIndex);
 	sf::Vector2f getPosition();
