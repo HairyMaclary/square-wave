@@ -45,7 +45,6 @@ void Ship::update(float deltaTime)
 	{
 		return;
 	}
-	// velocity is not frame or machine specific
 	runningTime += deltaTime;
 
 	if (runningTime > maxTime)

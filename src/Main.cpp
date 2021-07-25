@@ -86,7 +86,12 @@ main()
 		if (ship.alive && runningTime > spawnTime)
 		{
 			runningTime = 0;
-			spawnTime *= 0.9f;
+			spawnTime *= 0.95f;
+			// prevent late game 'avalanche' of asteroids
+			if (spawnTime < 3)
+			{
+				spawnTime = 10.0f;
+			}
 			asteroids.emplace_back(new Asteroid(window, ship.position));
 		}
 
