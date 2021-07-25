@@ -46,37 +46,40 @@ bool Laser::offscreen()
 // Another option is to set up the vectors in the asteroid object and
 // just keep them around all the time but not draw them. Perhaps creating
 // them is the casue of the lag.
-bool Laser::hitsAsteroid(Asteroid& asteroid)
-{
-	const uint asteroidPointCount = asteroid.totalPoints;
-	sf::FloatRect laserGlobalBounds = bolt.getGlobalBounds();
+// bool Laser::hitsAsteroid(Asteroid& asteroid)
+// {
+// 	return asteroid.hit(*this);
+// const uint asteroidPointCount = asteroid.totalPoints;
+// sf::FloatRect laserGlobalBounds = bolt.getGlobalBounds();
 
-	// for each pair of neighbouring points around the asteroid make a vector.
-	// Create new line shapes for each vector and check it's bounding box
-	// for a collision
-	for (uint i = 0; i < asteroidPointCount; i++)
-	{
-		sf::Vector2f firstPoint = asteroid.getPointTransform(i);
-		// make sure we loop back to the zeroth value for the last section
-		sf::Vector2f secondPoint = asteroid.getPointTransform((i + 1) % (asteroidPointCount));
-		sf::Vector2f diffVec = secondPoint - firstPoint;
-		sf::RectangleShape perimeterSection(diffVec);
+// // for each pair of neighbouring points around the asteroid make a vector.
+// // Create new line shapes for each vector and check it's bounding box
 
-		float rotation = asteroid.asteroid.getRotation();
-		sf::Vector2f scale = asteroid.asteroid.getScale();
-		sf::Vector2f position(firstPoint);
+// // for a collision
+// for (uint i = 0; i < asteroidPointCount; i++)
+// {
+// 	sf::Vector2f firstPoint = asteroid.getPointTransform(i);
+// 	// make sure we loop back to the zeroth value for the last section
+// 	sf::Vector2f secondPoint = asteroid.getPointTransform((i + 1) % (asteroidPointCount));
+// 	sf::Vector2f diffVec = secondPoint - firstPoint;
+// 	// std::cout << "Laser. x: " << firstPoint.x << " y: " << firstPoint.y << std::endl;
+// 	sf::RectangleShape perimeterSection(diffVec);
 
-		perimeterSection.setScale(scale);
-		perimeterSection.setPosition(position);
-		perimeterSection.setRotation(rotation);
-		// window.draw(perimeterSection); // useful for debugging
+// 	float rotation = asteroid.asteroid.getRotation();
+// 	sf::Vector2f scale = asteroid.asteroid.getScale();
+// 	sf::Vector2f position(firstPoint);
 
-		sf::FloatRect asteroidBounds = perimeterSection.getGlobalBounds();
+// 	perimeterSection.setScale(scale);
+// 	perimeterSection.setPosition(position);
+// 	perimeterSection.setRotation(rotation);
+// 	// window.draw(perimeterSection); // useful for debugging
 
-		if (laserGlobalBounds.intersects(asteroidBounds))
-		{
-			return true;
-		}
-	}
-	return false;
-}
+// 	sf::FloatRect asteroidBounds = perimeterSection.getGlobalBounds();
+
+// 	if (laserGlobalBounds.intersects(asteroidBounds))
+// 	{
+// 		return true;
+// 	}
+// }
+// return false;
+// }

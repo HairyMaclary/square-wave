@@ -1,5 +1,7 @@
 #pragma once
 
+#include "./Laser/Laser.h"
+
 class Asteroid
 {
 private:
@@ -10,6 +12,8 @@ private:
 	const float maxRadius { 40.0f };
 	float localMaxRadius;
 	// sf::ConvexShape asteroid;
+	std::vector<sf::Vector2f*> boundaryPoints;
+	std::vector<sf::RectangleShape> boundaryLines;
 
 	void getRandomRadius();
 	void getRandomPosition();
@@ -18,6 +22,7 @@ private:
 	void makeAsteroid();
 	void randomVelocity();
 	void edges();
+	void makeCollisonBoundary();
 
 public:
 	uint totalPoints;
@@ -29,4 +34,7 @@ public:
 	sf::Vector2f getPointTransform(uint pointIndex);
 	sf::Vector2f getPosition();
 	float getRadius();
+
+	// template <typename T>
+	bool hit(Laser& obj);
 };

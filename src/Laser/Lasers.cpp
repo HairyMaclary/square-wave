@@ -1,4 +1,5 @@
 #include "./Lasers.h"
+#include "../src/Asteroid/Asteroid.h"
 #include "../src/Ship/Ship.h"
 #include "./Laser.h"
 
@@ -60,19 +61,20 @@ void Lasers::deleteOldBolts()
 
 bool Lasers::hits(Asteroid& asteroid)
 {
-	std::vector<Laser*>::iterator position;
-	for (position = bolts.begin(); position != bolts.end();)
+	std::vector<Laser*>::iterator iterator;
+	for (iterator = bolts.begin(); iterator != bolts.end();)
 	{
-		if ((*position)->hitsAsteroid(asteroid))
+		// if ((*iterator)->hitsAsteroid(asteroid))
+		if (asteroid.hit(**iterator))
 		{
-			delete (*position);
-			(*position) = nullptr;
-			position = bolts.erase(position);
+			delete (*iterator);
+			(*iterator) = nullptr;
+			iterator = bolts.erase(iterator);
 			return true;
 		}
 		else
 		{
-			++position;
+			++iterator;
 		}
 	}
 	return false;

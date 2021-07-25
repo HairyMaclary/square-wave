@@ -1,4 +1,5 @@
 #include "./Asteroid.h"
+#include "./Laser/Laser.h"
 #include "Setup/Setup.h" /* windowWidth, windowHeight */
 #include <stdlib.h>		 /* srand, rand */
 #include <time.h>		 /* time */
@@ -34,14 +35,21 @@ void Asteroid::draw()
 	edges();
 	position += velocity;
 	asteroid.setPosition(position.x, position.y);
-
 	window.draw(asteroid);
+
+	for (uint i = 0; i < totalPoints; i++)
+	{
+		sf::Vector2f pos = getPointTransform(i);
+		boundaryLines[i].setPosition(pos.x, pos.y);
+		// window.draw(boundaryLines[i]);
+	}
 }
 
 void Asteroid::setUp()
 {
 	randomPointCount();
 	makeAsteroid();
+	makeCollisonBoundary();
 	randomVelocity();
 }
 
@@ -73,6 +81,32 @@ void Asteroid::makeAsteroid()
 	asteroid.setOutlineThickness(2);
 	asteroid.setOutlineColor(sf::Color(250, 255, 255));
 	asteroid.setPosition(position);
+}
+
+void Asteroid::makeCollisonBoundary()
+{
+	// Creating a set of verticies around the asteroid.
+	// Not creating a normal sf::shape because we want a finer control over hit-boxes.
+	// Instead we have a group of vectors constructed between adjacent points.
+	for (uint i = 0; i < totalPoints; i++)
+	{
+		sf::Vector2f firstPoint = getPointTransform(i);
+		// make sure we loop back to the zeroth value for the last section
+		sf::Vector2f secondPoint = getPointTransform((i + 1) % (totalPoints));
+		sf::Vector2f diffVec = secondPoint - firstPoint;
+
+		boundaryPoints.emplace_back(new sf::Vector2f(diffVec.x, diffVec.y));
+
+		sf::RectangleShape perimeterSection(diffVec);
+
+		float rotation = asteroid.getRotation();
+		sf::Vector2f scale = asteroid.getScale();
+
+		perimeterSection.setScale(scale);
+		perimeterSection.setRotation(rotation);
+
+		boundaryLines.emplace_back(perimeterSection);
+	}
 }
 
 void Asteroid::randomVelocity()
@@ -116,4 +150,21 @@ sf::Vector2f Asteroid::getPosition()
 float Asteroid::getRadius()
 {
 	return localMaxRadius;
+}
+
+// template <typename T>
+bool Asteroid::hit(Laser& obj)
+{
+	sf::FloatRect objGlobalBounds = obj.bolt.getGlobalBounds();
+	for (uint i = 0; i < totalPoints; i++)
+	{
+		sf::FloatRect segmentBounds = boundaryLines[i].getGlobalBounds();
+
+		if (segmentBounds.intersects(objGlobalBounds))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

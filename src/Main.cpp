@@ -74,11 +74,7 @@ main()
 				delete (*position);
 				(*position) = nullptr;
 				asteroids.erase(position);
-				std::cout << "radius " << radius << std::endl;
-
-				if (radius > 5)
 				{
-					std::cout << "size " << asteroids.size() << std::endl;
 					asteroids.emplace_back(new Asteroid(window, pos, radius / 2));
 					asteroids.emplace_back(new Asteroid(window, pos, radius / 2));
 				}
