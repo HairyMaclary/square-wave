@@ -6,6 +6,22 @@
 #include <stdlib.h>		 /* srand, rand */
 #include <time.h>		 /* time */
 
+Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius) :
+	window { window },
+	position { position },
+	localMaxRadius { radius }
+{
+	setUp();
+}
+
+Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f& shipPos) :
+	window { window },
+	localMaxRadius { maxRadius }
+{
+	getRandomPosition(shipPos);
+	setUp();
+}
+
 void Asteroid::getRandomPosition(sf::Vector2f shipPos)
 {
 
@@ -23,22 +39,6 @@ void Asteroid::getRandomPosition(sf::Vector2f shipPos)
 		vecToShip = shipPos - position;
 		distance = sqrt(pow(vecToShip.y, 2) + pow(vecToShip.x, 2));
 	}
-}
-
-Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius) :
-	window { window },
-	position { position },
-	localMaxRadius { radius }
-{
-	setUp();
-}
-
-Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f& shipPos) :
-	window { window },
-	localMaxRadius { maxRadius }
-{
-	getRandomPosition(shipPos);
-	setUp();
 }
 
 void Asteroid::draw()
