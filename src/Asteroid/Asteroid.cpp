@@ -122,8 +122,8 @@ void Asteroid::makeCollisonBoundary()
 
 void Asteroid::randomVelocity()
 {
-	velocity.x = (float)std::rand() / RAND_MAX * 0.01;
-	velocity.y = (float)std::rand() / RAND_MAX * 0.01;
+	velocity.x = (float)std::rand() / RAND_MAX * 0.025;
+	velocity.y = (float)std::rand() / RAND_MAX * 0.025;
 }
 
 void Asteroid::edges()
