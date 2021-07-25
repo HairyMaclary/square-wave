@@ -7,11 +7,12 @@
 Ship::Ship(sf::RenderWindow& mainWindow) :
 	window { mainWindow }
 {
-	ship.setPointCount(3);
+	ship.setPointCount(pointCount);
 	ship.setFillColor(sf::Color(0, 0, 0));
 	ship.setOutlineThickness(2);
 	ship.setOutlineColor(sf::Color(250, 255, 255));
 	setPoints();
+	makeCollisonBoundary();
 
 	if (!soundBuffer.loadFromFile("src/sounds/explosion.wav"))
 	{
@@ -61,6 +62,12 @@ void Ship::update(float deltaTime)
 		position.y += velocity.y;
 
 		ship.setPosition(position.x, position.y);
+
+		for (uint i = 0; i < pointCount; i++)
+		{
+			sf::Vector2f pos = getPointTransform(i);
+			boundaryLines[i].setPosition(pos.x, pos.y);
+		}
 	}
 }
 
@@ -155,13 +162,17 @@ void Ship::hits(Asteroid& asteroid)
 {
 	if (alive)
 	{
-		const sf::FloatRect& bounds = ship.getGlobalBounds();
 
-		if (asteroid.hit(bounds))
+		for (uint i = 0; i < pointCount; i++)
 		{
-			alive = false;
-			destructionSound.play();
-			return;
+			const sf::FloatRect& bounds = boundaryLines[i].getGlobalBounds();
+
+			if (asteroid.hit(bounds))
+			{
+				alive = false;
+				destructionSound.play();
+				return;
+			}
 		}
 	}
 }
@@ -169,4 +180,32 @@ void Ship::hits(Asteroid& asteroid)
 sf::FloatRect Ship::getGlobalBounds()
 {
 	return ship.getGlobalBounds();
+}
+
+void Ship::makeCollisonBoundary()
+{
+	// A group of lines around the ship to better test for collisons
+	for (uint i = 0; i < pointCount; i++)
+	{
+		sf::Vector2f firstPoint = getPointTransform(i);
+		// make sure we loop back to the zeroth value for the last section
+		sf::Vector2f secondPoint = getPointTransform((i + 1) % (pointCount));
+		sf::Vector2f diffVec = secondPoint - firstPoint;
+
+		sf::RectangleShape perimeterSection(diffVec);
+
+		float rotation = ship.getRotation();
+		sf::Vector2f scale = ship.getScale();
+
+		perimeterSection.setScale(scale);
+		perimeterSection.setRotation(rotation);
+
+		boundaryLines.emplace_back(perimeterSection);
+	}
+}
+
+sf::Vector2f Ship::getPointTransform(uint pointIndex)
+{
+	sf::Vector2f localPoint = ship.getPoint(pointIndex);
+	return ship.getTransform().transformPoint(localPoint);
 }

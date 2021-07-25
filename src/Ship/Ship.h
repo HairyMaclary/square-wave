@@ -7,6 +7,7 @@ class Ship
 private:
 	sf::RenderWindow& window;
 	const float height { 20.f };
+	const uint pointCount { 3 };
 	sf::Vector2f velocity;
 	const float velocityDrag { 0.98f };
 	const float maxTime { 1.0f / 60.0f }; // 60fps
@@ -17,12 +18,15 @@ private:
 	sf::ConvexShape ship;
 	sf::SoundBuffer soundBuffer;
 	sf::Sound destructionSound;
+	sf::Vector2f getPointTransform(uint pointIndex);
+	std::vector<sf::RectangleShape> boundaryLines;
 
 	void update(float deltaTime);
 	void setPoints();
 	void checkKeys();
 	void edges();
 	float distance(sf::Vector2f& p1, sf::Vector2f& p2);
+	void makeCollisonBoundary();
 
 public:
 	sf::Vector2f position { 0.0f, 0.0f };

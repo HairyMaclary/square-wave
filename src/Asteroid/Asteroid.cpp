@@ -24,7 +24,6 @@ Asteroid::Asteroid(sf::RenderWindow& window, sf::Vector2f& shipPos) :
 
 void Asteroid::getRandomPosition(sf::Vector2f shipPos)
 {
-
 	position.x = (float)std::rand() / RAND_MAX * windowWidth - (windowWidth / 2);
 	position.y = (float)std::rand() / RAND_MAX * windowHeight - (windowHeight / 2);
 
