@@ -31,5 +31,7 @@ void Score::update(float radius)
 
 void Score::draw()
 {
+	// incase of resize
+	scoreBox.setPosition(-windowWidth / 2 * 0.9, -windowHeight / 2 * 0.9);
 	window.draw(scoreBox);
 }

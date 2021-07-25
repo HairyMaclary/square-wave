@@ -1,8 +1,9 @@
 #include "./EventHandler.h"
 
-EventHandler::EventHandler(sf::RenderWindow& window, Ship& ship) :
+EventHandler::EventHandler(sf::RenderWindow& window, Ship& ship, sf::View& view) :
 	window { window },
-	ship { ship }
+	ship { ship },
+	view { view }
 {
 }
 
@@ -14,7 +15,7 @@ void EventHandler::process(sf::Event& event)
 			window.close();
 			break;
 		case sf::Event::Resized:
-			resizedView(window);
+			resizedView(window, view);
 			break;
 		case sf::Event::TextEntered:
 			printf("%c", event.text.unicode);

@@ -37,7 +37,7 @@ main()
 
 	sf::Clock clock;
 	sf::Event event;
-	EventHandler handler(window, ship);
+	EventHandler handler(window, ship, view);
 
 	while (window.isOpen())
 	{
