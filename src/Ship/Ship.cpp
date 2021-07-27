@@ -132,6 +132,11 @@ void Ship::checkKeys()
 	}
 }
 
+// since this is used more than once in two different objects
+// we should pull this out into a view management function or 
+// possibly a class (not call it 'utility' because it will get lost)
+// It would take in a position (and height) and return the new position.
+// Have a namespace in an .hpp file that wraps this up.
 void Ship::edges()
 {
 	if (position.x > window::width / 2 + height)
@@ -152,12 +157,21 @@ void Ship::edges()
 	}
 }
 
+// should be pulled out into a geometry or math file, and inside a namespace.
 float Ship::distance(sf::Vector2f& p1, sf::Vector2f& p2)
 {
 	sf::Vector2f diffVec = p1 - p2;
 	return std::sqrt(diffVec.x * diffVec.x + diffVec.y * diffVec.y);
 }
 
+
+// This interaction needs to be tested in a 3rd party class/namespace. 
+// This should then return a boolean. The function is currently doing two jobs.
+// What if there was more logic to do once a hit was detected? Eg, hit points.
+// It should not be the job of the utility function to know what should happen
+// once a hit is detected. This is a common problem in programming.
+// Make a pure function to make it reusable. This also spearates state better,
+// and helps with debugging.
 void Ship::hits(Asteroid& asteroid)
 {
 	if (alive)
