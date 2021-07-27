@@ -159,8 +159,13 @@ float Asteroid::getRadius()
 	return localMaxRadius;
 }
 
+
 bool Asteroid::hit(const sf::FloatRect& bounds)
 {
+	// for performance we need a first pass with a simpler system
+	// such comparing the radius of the longest point with the radisu of the ship
+	// so that there is only once calculation.
+	
 	for (uint i = 0; i < totalPoints; i++)
 	{
 		sf::FloatRect segmentBounds = boundaryLines[i].getGlobalBounds();
