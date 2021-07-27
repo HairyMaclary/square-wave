@@ -19,19 +19,23 @@ Asteroids::Asteroids(sf::RenderWindow& renderwindow, Ship& ship, Lasers& lasers,
 
 void Asteroids::draw(float deltaTime)
 {
-	std::vector<Asteroid*>::iterator position = asteroids.begin();
+	std::vector<Asteroid*>::iterator asteroidIt = asteroids.begin();
 
 	for (uint i = 0; i < asteroids.size(); i++)
 	{
 		const bool hit = lasers.hits(*asteroids[i]);
 		if (hit)
 		{
-			auto radius = (*position)->getRadius();
-			auto pos = (*position)->getPosition();
+			auto radius = (*asteroidIt)->getRadius();
+			auto pos = (*asteroidIt)->getPosition();
 
-			delete (*position);
-			(*position) = nullptr;
-			asteroids.erase(position);
+			// at this scale this is okay but ...
+			// we want a different data structure. 
+			// We don't need ordering here so a std::set would 
+			//allow you to iterate but be more performant when removing a member.
+			delete (*asteroidIt);
+			(*asteroidIt) = nullptr;
+			asteroids.erase(asteroidIt);
 
 			score.update(radius);
 
@@ -43,7 +47,7 @@ void Asteroids::draw(float deltaTime)
 		}
 		else
 		{
-			++position;
+			++asteroidIt;
 			(*asteroids[i]).draw();
 			ship.hits(*asteroids[i]);
 		}
