@@ -23,6 +23,9 @@ void Asteroids::draw(float deltaTime)
 
 	for (uint i = 0; i < asteroids.size(); i++)
 	{
+		// Too much logic in here. Do all the logic and update the state first. Then update
+		// draw. The more wrk you offload to the GPU the more you have to do first. They are not
+		// good at branching and other operations. Separate state and presentation.
 		const bool hit = lasers.hits(*asteroids[i]);
 		if (hit)
 		{
