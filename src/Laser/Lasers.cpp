@@ -2,6 +2,7 @@
 #include "../src/Asteroid/Asteroid.h"
 #include "../src/Ship/Ship.h"
 #include "./Laser.h"
+#include <list> // std::list
 
 Lasers::Lasers(sf::RenderWindow& renderWindow, Ship& craft) :
 	window { renderWindow },
@@ -47,20 +48,20 @@ void Lasers::update(float deltaTime)
 void Lasers::draw(float deltaTime)
 {
 	update(deltaTime);
-	for (uint i = 0; i < bolts.size(); i++)
+
+	std::list<Laser*>::iterator it;
+	for (it = bolts.begin(); it != bolts.end(); ++it)
 	{
-		bolts[i]->draw();
+		(*it)->draw();
 	}
 }
 void Lasers::deleteOldBolts()
 {
-	std::vector<Laser*>::iterator position;
-	for (position = bolts.begin(); position != bolts.end();)
+	std::list<Laser*>::iterator it;
+	for (it = bolts.begin(); it != bolts.end();)
 	{
-		if ((*position)->offscreen())
+		if ((*it)->offscreen())
 		{
-			// Is this enough to prevent memory leaks?
-
 			// When bolts was an array of Lasers instead of an array of pointers to lasers
 			// then erase() would fail. It was essentially moving elements of the vector
 			// around, and since the window member was a reference, it is treated as a
@@ -68,49 +69,49 @@ void Lasers::deleteOldBolts()
 			// a move-assignment operator ( T& operator = (T&&) ) ,
 			// or a copy-assignment operator (T& operator = (const T&)).
 			// see https://stackoverflow.com/questions/43307277/c-vector-erase-instance-of-a-class-with-const-int-gives-attempting-to-refere
-			delete (*position);
-			(*position) = nullptr;
-			position = bolts.erase(position); // erase returns back the next position
+			delete (*it);
+			(*it) = nullptr;
+			it = bolts.erase(it); // erase returns back the next position
 		}
 		else
 		{
-			++position;
+			++it;
 		}
 	}
 }
 
 bool Lasers::hits(Asteroid& asteroid)
 {
-	std::vector<Laser*>::iterator iterator;
-	for (iterator = bolts.begin(); iterator != bolts.end();)
+	std::list<Laser*>::iterator it;
+	for (it = bolts.begin(); it != bolts.end();)
 	{
 		sf::Vector2f asteroidPos = asteroid.getPosition();
-		sf::Vector2f laserPos = (*iterator)->getPosition();
+		sf::Vector2f laserPos = (*it)->getPosition();
 		sf::Vector2f diffVec = laserPos - asteroidPos;
 		float distance = sqrt(diffVec.x * diffVec.x + diffVec.y * diffVec.y);
 		float asteroidRadius = asteroid.getRadius();
 		// once the the laser is approximatley within 20px of the asteroid
 		// then use fine-grained/expensive collision detection.
-		const bool isNearby = distance < asteroidRadius + (*iterator)->getBoltLength() + 20;
+		const bool isNearby = distance < asteroidRadius + (*it)->getBoltLength() + 20;
 		if (isNearby)
 		{
-			const sf::FloatRect& bounds = (*iterator)->getGlobalBounds();
+			const sf::FloatRect& bounds = (*it)->getGlobalBounds();
 			if (asteroid.hit(bounds))
 			{
-				delete (*iterator);
-				(*iterator) = nullptr;
-				iterator = bolts.erase(iterator);
+				delete (*it);
+				(*it) = nullptr;
+				it = bolts.erase(it);
 				destructionSound.play();
 				return true;
 			}
 			else
 			{
-				++iterator;
+				++it;
 			}
 		}
 		else
 		{
-			++iterator;
+			++it;
 		}
 	}
 	return false;

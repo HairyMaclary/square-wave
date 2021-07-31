@@ -2,14 +2,14 @@
 #include "../src/Ship/Ship.h"
 #include "./Asteroid/Asteroid.h"
 #include "./Laser.h"
-#include <vector>
+#include <list> // std::list
 
 class Lasers
 {
 private:
 	sf::RenderWindow& window;
 	Ship& ship;
-	std::vector<Laser*> bolts;
+	std::list<Laser*> bolts;
 	float maxTime { 1.0f / 5.0f };
 	float runningTime { maxTime };
 	sf::SoundBuffer destructionSoundBuffer;
