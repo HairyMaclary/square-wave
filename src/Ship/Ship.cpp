@@ -125,10 +125,10 @@ void Ship::checkKeys()
 	}
 
 	// for testing only
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-	{
-		reset();
-	}
+	// if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+	// {
+	// 	reset();
+	// }
 }
 
 // since this is used more than once in two different objects
