@@ -40,18 +40,23 @@ void Asteroid::getRandomPosition(sf::Vector2f shipPos)
 	}
 }
 
-void Asteroid::draw()
+void Asteroid::update()
 {
 	edges();
 	position += velocity;
 	asteroid.setPosition(position.x, position.y);
-	window.draw(asteroid);
 
 	for (uint i = 0; i < totalPoints; i++)
 	{
 		sf::Vector2f pos = getPointTransform(i);
 		boundaryLines[i].setPosition(pos.x, pos.y);
 	}
+}
+
+void Asteroid::draw()
+{
+	update();
+	window.draw(asteroid);
 }
 
 void Asteroid::setUp()
@@ -159,13 +164,12 @@ float Asteroid::getRadius()
 	return localMaxRadius;
 }
 
-
 bool Asteroid::hit(const sf::FloatRect& bounds)
 {
 	// for performance we need a first pass with a simpler system
 	// such comparing the radius of the longest point with the radisu of the ship
 	// so that there is only once calculation.
-	
+
 	for (uint i = 0; i < totalPoints; i++)
 	{
 		sf::FloatRect segmentBounds = boundaryLines[i].getGlobalBounds();

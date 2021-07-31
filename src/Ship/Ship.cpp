@@ -24,8 +24,6 @@ Ship::Ship(sf::RenderWindow& mainWindow) :
 
 void Ship::draw(float deltaTime)
 {
-
-	ship.setRotation(heading);
 	update(deltaTime);
 	if (alive)
 	{
@@ -40,6 +38,7 @@ void Ship::turn(float angle)
 
 void Ship::update(float deltaTime)
 {
+	ship.setRotation(heading);
 	checkKeys();
 	if (!alive)
 	{
@@ -133,7 +132,7 @@ void Ship::checkKeys()
 }
 
 // since this is used more than once in two different objects
-// we should pull this out into a view management function or 
+// we should pull this out into a view management function or
 // possibly a class (not call it 'utility' because it will get lost)
 // It would take in a position (and height) and return the new position.
 // Have a namespace in an .hpp file that wraps this up.
@@ -164,8 +163,7 @@ float Ship::distance(sf::Vector2f& p1, sf::Vector2f& p2)
 	return std::sqrt(diffVec.x * diffVec.x + diffVec.y * diffVec.y);
 }
 
-
-// This interaction needs to be tested in a 3rd party class/namespace. 
+// This interaction needs to be tested in a 3rd party class/namespace.
 // This should then return a boolean. The function is currently doing two jobs.
 // What if there was more logic to do once a hit was detected? Eg, hit points.
 // It should not be the job of the utility function to know what should happen
@@ -176,7 +174,6 @@ void Ship::hits(Asteroid& asteroid)
 {
 	if (alive)
 	{
-
 		for (uint i = 0; i < pointCount; i++)
 		{
 			const sf::FloatRect& bounds = boundaryLines[i].getGlobalBounds();

@@ -17,6 +17,8 @@ private:
 	float runningTime = 0.0f;
 	float spawnTime = 10.0f;
 
+	void update(float deltaTime);
+
 public:
 	Asteroids(sf::RenderWindow& renderwindow, Ship& ship, Lasers& Lasers, Score& score);
 	void draw(float deltaTime);

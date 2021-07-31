@@ -23,6 +23,7 @@ private:
 	void randomVelocity();
 	void edges();
 	void makeCollisonBoundary();
+	void update();
 
 public:
 	Asteroid(sf::RenderWindow& window, sf::Vector2f position, float radius);

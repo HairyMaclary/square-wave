@@ -17,15 +17,15 @@ Asteroids::Asteroids(sf::RenderWindow& renderwindow, Ship& ship, Lasers& lasers,
 	}
 }
 
-void Asteroids::draw(float deltaTime)
+// Separate state and presentation.
+// Keep as much logic in update as possible. That is, do all the logic required to update
+// state before the GPU does it's work. The GPU is not good at branching and other operations.
+void Asteroids::update(float deltaTime)
 {
 	std::vector<Asteroid*>::iterator asteroidIt = asteroids.begin();
 
 	for (uint i = 0; i < asteroids.size(); i++)
 	{
-		// Too much logic in here. Do all the logic and update the state first. Then update
-		// draw. The more wrk you offload to the GPU the more you have to do first. They are not
-		// good at branching and other operations. Separate state and presentation.
 		const bool hit = lasers.hits(*asteroids[i]);
 		if (hit)
 		{
@@ -33,9 +33,9 @@ void Asteroids::draw(float deltaTime)
 			auto pos = (*asteroidIt)->getPosition();
 
 			// at this scale this is okay but ...
-			// we want a different data structure. 
-			// We don't need ordering here so a std::set would 
-			//allow you to iterate but be more performant when removing a member.
+			// we want a different data structure.
+			// We don't need ordering here so a std::set would
+			// allow you to iterate but be more performant when removing a member.
 			delete (*asteroidIt);
 			(*asteroidIt) = nullptr;
 			asteroids.erase(asteroidIt);
@@ -51,8 +51,6 @@ void Asteroids::draw(float deltaTime)
 		else
 		{
 			++asteroidIt;
-			(*asteroids[i]).draw();
-			ship.hits(*asteroids[i]);
 		}
 	}
 
@@ -67,5 +65,16 @@ void Asteroids::draw(float deltaTime)
 			spawnTime = 10.0f;
 		}
 		asteroids.emplace_back(new Asteroid(window, ship.position));
+	}
+}
+
+void Asteroids::draw(float deltaTime)
+{
+	update(deltaTime);
+
+	for (uint i = 0; i < asteroids.size(); i++)
+	{
+		(*asteroids[i]).draw();
+		ship.hits(*asteroids[i]);
 	}
 }

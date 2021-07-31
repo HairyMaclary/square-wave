@@ -19,6 +19,7 @@ private:
 
 	void checkKeys();
 	void deleteOldBolts();
+	void update(float deltaTime);
 
 public:
 	Lasers(sf::RenderWindow& window, Ship& craft);

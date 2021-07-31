@@ -21,10 +21,15 @@ void Laser::velocityFromAngle(float angle)
 	velocity.y = vectorLength * -std::cos(radians);
 }
 
-void Laser::draw()
+void Laser::update()
 {
 	position += velocity;
 	bolt.setPosition(position);
+}
+
+void Laser::draw()
+{
+	update();
 	window.draw(bolt);
 }
 
