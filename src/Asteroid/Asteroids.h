@@ -4,6 +4,7 @@
 #include "../src/Laser/Lasers.h"
 #include "../src/Score/Score.h"
 #include "../src/Ship/Ship.h"
+#include <list> // std::list
 
 class Asteroids
 {
@@ -12,7 +13,7 @@ private:
 	Ship& ship;
 	Lasers& lasers;
 	Score& score;
-	std::vector<Asteroid*> asteroids;
+	std::list<Asteroid*> asteroids;
 	uint initialAsteroidCount { 5 };
 	float runningTime = 0.0f;
 	float spawnTime = 10.0f;

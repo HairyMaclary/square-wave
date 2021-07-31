@@ -13,7 +13,7 @@ Asteroids::Asteroids(sf::RenderWindow& renderwindow, Ship& ship, Lasers& lasers,
 
 	for (uint i = 0; i < initialAsteroidCount; ++i)
 	{
-		asteroids.emplace_back(new Asteroid(window, ship.position));
+		asteroids.push_back(new Asteroid(window, ship.position));
 	}
 }
 
@@ -22,23 +22,18 @@ Asteroids::Asteroids(sf::RenderWindow& renderwindow, Ship& ship, Lasers& lasers,
 // state before the GPU does it's work. The GPU is not good at branching and other operations.
 void Asteroids::update(float deltaTime)
 {
-	std::vector<Asteroid*>::iterator asteroidIt = asteroids.begin();
-
-	for (uint i = 0; i < asteroids.size(); i++)
+	std::list<Asteroid*>::iterator it;
+	for (it = asteroids.begin(); it != asteroids.end();)
 	{
-		const bool hit = lasers.hits(*asteroids[i]);
+		const bool hit = lasers.hits(**it);
 		if (hit)
 		{
-			auto radius = (*asteroidIt)->getRadius();
-			auto pos = (*asteroidIt)->getPosition();
+			auto radius = (*it)->getRadius();
+			auto pos = (*it)->getPosition();
 
-			// at this scale this is okay but ...
-			// we want a different data structure.
-			// We don't need ordering here so a std::set would
-			// allow you to iterate but be more performant when removing a member.
-			delete (*asteroidIt);
-			(*asteroidIt) = nullptr;
-			asteroids.erase(asteroidIt);
+			delete (*it);
+			(*it) = nullptr;
+			it = asteroids.erase(it);
 
 			score.update(radius);
 
@@ -50,7 +45,7 @@ void Asteroids::update(float deltaTime)
 		}
 		else
 		{
-			++asteroidIt;
+			++it;
 		}
 	}
 
@@ -72,9 +67,10 @@ void Asteroids::draw(float deltaTime)
 {
 	update(deltaTime);
 
-	for (uint i = 0; i < asteroids.size(); i++)
+	std::list<Asteroid*>::iterator it;
+	for (it = asteroids.begin(); it != asteroids.end(); ++it)
 	{
-		(*asteroids[i]).draw();
-		ship.hits(*asteroids[i]);
+		(**it).draw();
+		ship.hits(**it);
 	}
 }
