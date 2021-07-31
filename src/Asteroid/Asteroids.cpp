@@ -18,7 +18,7 @@ Asteroids::Asteroids(sf::RenderWindow& renderwindow, Ship& ship, Lasers& lasers,
 }
 
 // Separate state and presentation.
-// Keep as much logic in update as possible. That is, do all the logic required to update
+// Keep as much logic in the update() as possible. That is, do all the logic required to update
 // state before the GPU does it's work. The GPU is not good at branching and other operations.
 void Asteroids::update(float deltaTime)
 {
