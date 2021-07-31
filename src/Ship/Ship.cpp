@@ -174,15 +174,26 @@ void Ship::hits(Asteroid& asteroid)
 {
 	if (alive)
 	{
-		for (uint i = 0; i < pointCount; i++)
+		sf::Vector2f asteroidPos = asteroid.getPosition();
+		sf::Vector2f shipPos = ship.getPosition();
+		sf::Vector2f diffVec = shipPos - asteroidPos;
+		float distance = sqrt(diffVec.x * diffVec.x + diffVec.y * diffVec.y);
+		float asteroidRadius = asteroid.getRadius();
+		// once the the ship is approximatley within 20px of the asteroid
+		// then use fine grained collision detection.
+		const bool isNearby = distance < asteroidRadius + height + 20;
+		if (isNearby)
 		{
-			const sf::FloatRect& bounds = boundaryLines[i].getGlobalBounds();
-
-			if (asteroid.hit(bounds))
+			for (uint i = 0; i < pointCount; i++)
 			{
-				alive = false;
-				destructionSound.play();
-				return;
+				const sf::FloatRect& bounds = boundaryLines[i].getGlobalBounds();
+
+				if (asteroid.hit(bounds))
+				{
+					alive = false;
+					destructionSound.play();
+					return;
+				}
 			}
 		}
 	}

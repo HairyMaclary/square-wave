@@ -5,7 +5,7 @@ Laser::Laser(sf::RenderWindow& renderWindow, sf::Vector2f shipPos, float shipHea
 	window { renderWindow },
 	position { shipPos }
 {
-	bolt.setSize(sf::Vector2f(3.0f, 10.0f));
+	bolt.setSize(sf::Vector2f(3.0f, boltLength));
 	bolt.setOrigin(1.5f, 5.f);
 	bolt.setRotation(shipHeading);
 	bolt.setFillColor(sf::Color::White);
@@ -46,4 +46,14 @@ bool Laser::offscreen()
 sf::FloatRect Laser::getGlobalBounds()
 {
 	return bolt.getGlobalBounds();
+}
+
+sf::Vector2f Laser::getPosition()
+{
+	return bolt.getPosition();
+}
+
+float Laser::getBoltLength()
+{
+	return boltLength;
 }

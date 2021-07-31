@@ -81,22 +81,41 @@ void Lasers::deleteOldBolts()
 
 bool Lasers::hits(Asteroid& asteroid)
 {
+
 	std::vector<Laser*>::iterator iterator;
 	for (iterator = bolts.begin(); iterator != bolts.end();)
 	{
-		const sf::FloatRect& bounds = (*iterator)->getGlobalBounds();
-		if (asteroid.hit(bounds))
+
+		sf::Vector2f asteroidPos = asteroid.getPosition();
+		sf::Vector2f laserPos = (*iterator)->getPosition();
+		sf::Vector2f diffVec = laserPos - asteroidPos;
+		float distance = sqrt(diffVec.x * diffVec.x + diffVec.y * diffVec.y);
+		float asteroidRadius = asteroid.getRadius();
+		// once the the laser is approximatley within 20px of the asteroid
+		// then use fine-grained/expensive collision detection.
+		const bool isNearby = distance < asteroidRadius + (*iterator)->getBoltLength() + 20;
+		if (isNearby)
 		{
-			delete (*iterator);
-			(*iterator) = nullptr;
-			iterator = bolts.erase(iterator);
-			destructionSound.play();
-			return true;
+
+			const sf::FloatRect& bounds = (*iterator)->getGlobalBounds();
+			if (asteroid.hit(bounds))
+			{
+				delete (*iterator);
+				(*iterator) = nullptr;
+				iterator = bolts.erase(iterator);
+				destructionSound.play();
+				return true;
+			}
+			else
+			{
+				++iterator;
+			}
 		}
 		else
 		{
 			++iterator;
 		}
 	}
+
 	return false;
 }
