@@ -4,10 +4,11 @@ class Laser
 {
 private:
 	sf::RenderWindow& window;
-	float boltLength {10.0f};
+	float boltLength { 10.0f };
 	sf::RectangleShape bolt;
 	sf::Vector2f position;
 	sf::Vector2f velocity;
+	void update();
 
 	void velocityFromAngle(float angle);
 
@@ -16,7 +17,6 @@ public:
 		sf::RenderWindow& renderWindow,
 		sf::Vector2f shipPos,
 		float shipHeading);
-	void update();
 	void draw();
 	bool offscreen();
 	sf::FloatRect getGlobalBounds();
