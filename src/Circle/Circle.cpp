@@ -1,4 +1,5 @@
 #include "./Circle.hpp"
+#include "../Setup/Setup.h"
 
 Circle::Circle(sf::RenderWindow& window, uint iterationCount) :
 	window { window }

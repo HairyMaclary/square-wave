@@ -1,5 +1,3 @@
-#include "../Setup/Setup.h"
-
 class Circle
 {
 private:
