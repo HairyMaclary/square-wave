@@ -8,8 +8,9 @@ main()
 	sf::RenderWindow window;
 	sf::View view;
 	generateSetup(window, view, "Fourier Square Wave Generation");
+	view.move(600.0f, 0.f);
 
-	// esentially the number of superimposed sound waves
+	// essentially the number of superimposed sound waves
 	const uint maxIterations = 3;
 
 	// using std::vector because we need i in the circle constructor

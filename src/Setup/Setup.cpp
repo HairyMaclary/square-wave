@@ -5,8 +5,8 @@
 
 namespace window
 {
-float width = 1200.0f;
-float height = 900.0f;
+float width = 1800.0f;
+float height = 600.0f;
 }
 
 namespace constants
