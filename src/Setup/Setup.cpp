@@ -12,6 +12,7 @@ float height = 900.0f;
 namespace constants
 {
 extern const float pi { float(std::atan(1) * 4) };
+extern const float maxTime { 0.0167 }; // 60 fps
 }
 
 void resizedView(const sf::RenderWindow& window, sf::View& view)

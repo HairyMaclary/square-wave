@@ -10,7 +10,7 @@ Circle::Circle(sf::RenderWindow& window, uint iterationCount) :
 	circ.setRadius(radius);
 	circ.setOutlineThickness(1.f);
 	circ.setOutlineColor(sf::Color(255.f, 255.f, 255.f, 100.f));
-	circ.setFillColor(sf::Color::Black);
+	circ.setFillColor(sf::Color::Transparent);
 	circ.setOrigin(radius, radius);
 	circ.setPointCount(100);
 
@@ -27,18 +27,16 @@ Circle::Circle(sf::RenderWindow& window, uint iterationCount) :
 	line[1].color = sf::Color(255.f, 255.f, 255.f, 100.f);
 }
 
-void Circle::update(float deltaTime)
+void Circle::update(float& x, float& y)
 {
-	runningTime += deltaTime;
-	if (runningTime > maxTime)
-	{
-		radians += 2 * constants::pi * maxTime * dampner;
-		float x = radius * cos(radians);
-		float y = radius * sin(radians);
-		point.setPosition(x, y);
-		runningTime = 0;
-		line[1].position = sf::Vector2f(x, y);
-	}
+	circ.setPosition(x, y);
+	line[0].position = sf::Vector2f(x, y);
+
+	radians += 2 * constants::pi * constants::maxTime * dampner;
+	x += radius * cos(n * radians);
+	y += radius * sin(n * radians);
+	point.setPosition(x, y);
+	line[1].position = sf::Vector2f(x, y);
 }
 
 void Circle::draw()

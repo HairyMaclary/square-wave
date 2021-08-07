@@ -11,6 +11,7 @@ extern float height;
 namespace constants
 {
 extern const float pi;
+extern const float maxTime;
 }
 
 void resizedView(const sf::RenderWindow& window, sf::View& view);

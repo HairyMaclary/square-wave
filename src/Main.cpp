@@ -9,8 +9,18 @@ main()
 	sf::View view;
 	generateSetup(window, view, "Fourier Square Wave Generation");
 
-	Circle circle(window, 0);
+	// esentially the number of superimposed sound waves
+	const uint maxIterations = 3;
 
+	// using std::vector because we need i in the circle constructor
+	std::vector<Circle*> circles;
+
+	for (uint i = 0; i < maxIterations; ++i)
+	{
+		circles.push_back(new Circle(window, i));
+	}
+
+	float runningTime { 0 };
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 	sf::Event event;
@@ -26,8 +36,28 @@ main()
 
 		window.clear(sf::Color(0, 0, 0));
 
-		circle.update(deltaTime);
-		circle.draw();
+		runningTime += deltaTime;
+		if (runningTime > constants::maxTime)
+		{
+			// origin for the first circle
+			float x = 0;
+			float y = 0;
+
+			std::vector<Circle*>::iterator it;
+			for (it = circles.begin(); it != circles.end(); ++it)
+			{
+				(*it)->update(x, y);
+			}
+
+			runningTime = 0;
+		}
+
+		std::vector<Circle*>::iterator it;
+		for (it = circles.begin(); it != circles.end(); ++it)
+		{
+			(*it)->draw();
+		}
+
 		window.setView(view);
 		window.display();
 	}
