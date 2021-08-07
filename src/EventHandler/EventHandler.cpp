@@ -1,8 +1,7 @@
 #include "./EventHandler.h"
 
-EventHandler::EventHandler(sf::RenderWindow& window, Ship& ship, sf::View& view) :
+EventHandler::EventHandler(sf::RenderWindow& window, sf::View& view) :
 	window { window },
-	ship { ship },
 	view { view }
 {
 }
