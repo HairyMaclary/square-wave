@@ -5,7 +5,7 @@ main()
 {
 	sf::RenderWindow window;
 	sf::View view;
-	generateSetup(window, view);
+	generateSetup(window, view, "Fourier Square Wave Generation");
 
 	// float deltaTime = 0.0f;
 	sf::Clock clock;

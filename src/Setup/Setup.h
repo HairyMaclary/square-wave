@@ -14,6 +14,6 @@ extern const float pi;
 }
 
 void resizedView(const sf::RenderWindow& window, sf::View& view);
-void generateSetup(sf::RenderWindow& window, sf::View& view);
+void generateSetup(sf::RenderWindow& window, sf::View& view, std::string windowTitle);
 
 #endif
