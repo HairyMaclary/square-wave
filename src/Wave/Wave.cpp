@@ -13,7 +13,7 @@ void Wave::removeOldValues()
 {
 	while (verticies.size() > window::width)
 	{
-		verticies.pop_back();
+		verticies.erase(verticies.begin());
 	}
 }
 
