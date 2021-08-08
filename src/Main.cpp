@@ -9,10 +9,10 @@ main()
 	sf::RenderWindow window;
 	sf::View view;
 	generateSetup(window, view, "Fourier Square Wave Generation");
-	view.move(600.0f, 0.f);
+	view.move(600.0f, 0.f); // move the circles so that we can see more wave
 
 	// essentially the number of super-imposed sine waves
-	const uint maxIterations = 2;
+	const uint maxIterations = 15;
 
 	// using std::vector because we need i in the circle constructor
 	std::vector<Circle*> circles;
@@ -25,8 +25,6 @@ main()
 
 	// line to connect the last point with the wave
 	sf::VertexArray line { sf::Lines, 2 };
-	// line[0].position = sf::Vector2f(0.f, 0.f);
-	// line[1].position = sf::Vector2f(100.f, 100.f);
 	line[0].color = sf::Color(255.f, 255.f, 255.f, 100.f);
 	line[1].color = sf::Color(255.f, 255.f, 255.f, 100.f);
 
