@@ -12,7 +12,7 @@ main()
 	view.move(600.0f, 0.f);
 
 	// essentially the number of super-imposed sine waves
-	const uint maxIterations = 15;
+	const uint maxIterations = 2;
 
 	// using std::vector because we need i in the circle constructor
 	std::vector<Circle*> circles;
@@ -22,6 +22,13 @@ main()
 	}
 
 	Wave wave(window);
+
+	// line to connect the last point with the wave
+	sf::VertexArray line { sf::Lines, 2 };
+	// line[0].position = sf::Vector2f(0.f, 0.f);
+	// line[1].position = sf::Vector2f(100.f, 100.f);
+	line[0].color = sf::Color(255.f, 255.f, 255.f, 100.f);
+	line[1].color = sf::Color(255.f, 255.f, 255.f, 100.f);
 
 	float runningTime { 0 };
 	float deltaTime = 0.0f;
@@ -53,6 +60,10 @@ main()
 			}
 
 			wave.addValue(y);
+			sf::Vector2f lastWavePos = wave.getLastPosition();
+
+			line[0].position = sf::Vector2f(x, y);
+			line[1].position = lastWavePos;
 
 			runningTime = 0;
 		}
@@ -65,6 +76,7 @@ main()
 
 		wave.update();
 		wave.draw();
+		window.draw(line);
 
 		window.setView(view);
 		window.display();

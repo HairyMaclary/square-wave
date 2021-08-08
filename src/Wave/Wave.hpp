@@ -24,4 +24,9 @@ public:
 	void addValue(float yValue);
 	void update();
 	void draw();
+	sf::Vector2f getLastPosition()
+	{
+		sf::Vertex lastElement = verticies[verticies.size() - 1];
+		return lastElement.position;
+	}
 };
