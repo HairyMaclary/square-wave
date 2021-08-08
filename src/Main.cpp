@@ -1,6 +1,7 @@
 #include "./EventHandler/EventHandler.h"
 #include "./Setup/Setup.h" // window dimensions, views, constants
 #include "Circle/Circle.hpp"
+#include "Wave/Wave.hpp"
 #include <math.h> /* sin, cos */
 
 main()
@@ -10,16 +11,17 @@ main()
 	generateSetup(window, view, "Fourier Square Wave Generation");
 	view.move(600.0f, 0.f);
 
-	// essentially the number of superimposed sound waves
-	const uint maxIterations = 3;
+	// essentially the number of super-imposed sine waves
+	const uint maxIterations = 15;
 
 	// using std::vector because we need i in the circle constructor
 	std::vector<Circle*> circles;
-
 	for (uint i = 0; i < maxIterations; ++i)
 	{
 		circles.push_back(new Circle(window, i));
 	}
+
+	Wave wave(window);
 
 	float runningTime { 0 };
 	float deltaTime = 0.0f;
@@ -50,6 +52,8 @@ main()
 				(*it)->update(x, y);
 			}
 
+			wave.addValue(y);
+
 			runningTime = 0;
 		}
 
@@ -58,6 +62,9 @@ main()
 		{
 			(*it)->draw();
 		}
+
+		wave.update();
+		wave.draw();
 
 		window.setView(view);
 		window.display();
