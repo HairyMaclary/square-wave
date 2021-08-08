@@ -13,7 +13,7 @@ private:
 	// Each vertex is one pixel. As a new vertex is added we need to shift right
 	void shiftRight();
 
-	// free up memory once for those points that are off screen
+	// free up memory by removing those points that are off screen
 	void removeOldValues();
 
 public:

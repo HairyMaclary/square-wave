@@ -12,7 +12,7 @@ main()
 	view.move(600.0f, 0.f); // move the circles so that we can see more wave
 
 	// essentially the number of super-imposed sine waves
-	const uint maxIterations = 15;
+	const uint maxIterations = 5;
 
 	// using std::vector because we need i in the circle constructor
 	std::vector<Circle*> circles;
