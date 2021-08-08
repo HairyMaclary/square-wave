@@ -14,7 +14,7 @@ Circle::Circle(sf::RenderWindow& window, uint iterationCount) :
 	circ.setOrigin(radius, radius);
 	circ.setPointCount(100);
 
-	const float pointRadius = 6.f;
+	const float pointRadius = 3.f;
 	point.setRadius(pointRadius);
 	point.setOutlineThickness(1.f);
 	point.setOutlineColor(sf::Color::White);
