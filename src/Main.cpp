@@ -79,5 +79,12 @@ main()
 		window.setView(view);
 		window.display();
 	}
+
+	// memory clean up
+	std::vector<Circle*>::iterator it;
+	for (it = circles.begin(); it != circles.end(); ++it)
+	{
+		delete *it;
+	}
 	return 0;
 }
