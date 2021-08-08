@@ -21,7 +21,7 @@ void Wave::addValue(float yValue)
 {
 	shiftRight();
 	sf::Vertex vertex;
-	vertex.position = sf::Vector2f(0.f, yValue);
+	vertex.position = sf::Vector2f(300.f, yValue);
 	vertex.color = sf::Color::White;
 	verticies.push_back(vertex);
 }
