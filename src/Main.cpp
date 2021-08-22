@@ -1,6 +1,5 @@
 #include "./EventHandler/EventHandler.h"
 #include "./Gui/ArrowControl.hpp"
-#include "./Gui/Slider.hpp"
 #include "./Setup/Setup.h" // window dimensions, views, constants
 #include "Circle/Circle.hpp"
 #include "Wave/Wave.hpp"
