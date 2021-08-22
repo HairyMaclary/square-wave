@@ -1,8 +1,10 @@
 #include "./EventHandler.h"
+#include "./Gui/ArrowControl.hpp"
 
-EventHandler::EventHandler(sf::RenderWindow& window, sf::View& view) :
+EventHandler::EventHandler(sf::RenderWindow& window, sf::View& view, ArrowControl& arrowControl) :
 	window { window },
-	view { view }
+	view { view },
+	arrowControl { arrowControl }
 {
 }
 
@@ -20,10 +22,14 @@ void EventHandler::process(sf::Event& event)
 			printf("%c", event.text.unicode);
 			break;
 		case sf::Event::KeyPressed:
-			// if (event.key.code == sf::Keyboard::Key::Up)
-			// {
-			// 	ship.boost();
-			// }
+			if (event.key.code == sf::Keyboard::Key::Up)
+			{
+				arrowControl.increase();
+			}
+			if (event.key.code == sf::Keyboard::Key::Down)
+			{
+				arrowControl.decrease();
+			}
 			break;
 		case sf::Event::GainedFocus:
 		case sf::Event::KeyReleased:

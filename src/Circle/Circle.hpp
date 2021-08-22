@@ -10,11 +10,12 @@ private:
 	sf::CircleShape circ;
 	sf::CircleShape point;
 	sf::VertexArray line { sf::Lines, 2 };
-	float radians { 0 };
+	float radians;
 	const float dampner { 0.1 };
 
 public:
-	Circle(sf::RenderWindow& window, uint iterationCount);
+	Circle(sf::RenderWindow& window, uint iterationCount, float radians = 0);
 	void update(float& x, float& y);
 	void draw();
+	float getRadians();
 };

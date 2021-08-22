@@ -1,8 +1,9 @@
 #include "./Circle.hpp"
 #include "../Setup/Setup.h"
 
-Circle::Circle(sf::RenderWindow& window, uint iterationCount) :
-	window { window }
+Circle::Circle(sf::RenderWindow& window, uint iterationCount, float radians) :
+	window { window },
+	radians { radians }
 {
 	n = iterationCount * 2 + 1;
 	radius = initalRadius * (4 / (n * constants::pi));
@@ -44,4 +45,9 @@ void Circle::draw()
 	window.draw(circ);
 	window.draw(point);
 	window.draw(line);
+}
+
+float Circle::getRadians()
+{
+	return radians;
 }

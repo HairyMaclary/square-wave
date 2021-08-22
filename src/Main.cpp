@@ -1,4 +1,6 @@
 #include "./EventHandler/EventHandler.h"
+#include "./Gui/ArrowControl.hpp"
+#include "./Gui/Slider.hpp"
 #include "./Setup/Setup.h" // window dimensions, views, constants
 #include "Circle/Circle.hpp"
 #include "Wave/Wave.hpp"
@@ -12,11 +14,11 @@ main()
 	view.move(600.0f, 0.f); // move the circles so that we can see more wave
 
 	// essentially the number of super-imposed sine waves
-	const uint maxIterations = 5;
+	uint iterations = 3;
 
 	// using std::vector because we need i in the circle constructor
 	std::vector<Circle*> circles;
-	for (uint i = 0; i < maxIterations; ++i)
+	for (uint i = 0; i < iterations; ++i)
 	{
 		circles.push_back(new Circle(window, i));
 	}
@@ -28,11 +30,14 @@ main()
 	line[0].color = sf::Color(255.f, 255.f, 255.f, 100.f);
 	line[1].color = sf::Color(255.f, 255.f, 255.f, 100.f);
 
+	// slider to adjust the number of component waves
+	ArrowControl arrowControl(window, iterations);
+
 	float runningTime { 0 };
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 	sf::Event event;
-	EventHandler handler(window, view);
+	EventHandler handler(window, view, arrowControl);
 
 	while (window.isOpen())
 	{
@@ -47,6 +52,20 @@ main()
 		runningTime += deltaTime;
 		if (runningTime > constants::maxTime)
 		{
+			const int updateDifference = (int)circles.size() - (int)iterations;
+			// if the count has changed only add/remove one circle system per frame. Improve performance.
+			if (updateDifference < 0)
+			{
+				float currentRadians = (circles[0])->getRadians();
+				circles.push_back(new Circle(window, circles.size(), currentRadians));
+			}
+			else if (updateDifference > 0)
+			{
+				std::vector<Circle*>::iterator it(circles.end() - 1);
+				delete *it;
+				circles.pop_back();
+			}
+
 			// origin for the first circle
 			float x = 0;
 			float y = 0;
@@ -74,6 +93,8 @@ main()
 
 		wave.update();
 		wave.draw();
+		arrowControl.update();
+		arrowControl.draw();
 		window.draw(line);
 
 		window.setView(view);
